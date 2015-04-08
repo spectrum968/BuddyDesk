@@ -42,6 +42,41 @@ CBuddyDeskView::~CBuddyDeskView()
 {
 }
 
+int CBuddyDeskView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// create the chart control.
+	if (!m_wndChartControl.Create(WS_CHILD | WS_VISIBLE, CRect(0, 0, 0, 0), this, 0))
+	{
+		TRACE0("Error creating chart control.\n");
+		return -1;
+	}
+
+	ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
+
+	m_wndChartControl.GetContent()->GetAppearance()->LoadAppearance(_T("CHART_APPEARANCE_GRAY"));
+
+	// set chart title.
+	CXTPChartTitleCollection* pTitles = m_wndChartControl.GetContent()->GetTitles();
+	CXTPChartTitle* pTitle = pTitles->Add(new CXTPChartTitle());
+	pTitle->SetText(_T("Historical Stock Prices"));
+
+	// set chart subtitle.
+	//CXTPChartTitle* pSubTitle = pTitles->Add(new CXTPChartTitle());
+	//pSubTitle->SetText(_T("www.codejock.com"));
+	//pSubTitle->SetDocking(xtpChartDockBottom);
+	//pSubTitle->SetAlignment(xtpChartAlignFar);
+	//pSubTitle->SetFont(CXTPChartFont::GetTahoma8());
+	//pSubTitle->SetTextColor(CXTPChartColor::Gray);
+
+	// turn off legend.
+	m_wndChartControl.GetContent()->GetLegend()->SetVisible(FALSE);
+
+	return 0;
+}
+
 BOOL CBuddyDeskView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改

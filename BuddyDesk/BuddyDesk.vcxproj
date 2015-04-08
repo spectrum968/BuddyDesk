@@ -108,6 +108,7 @@
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="FileView.h" />
+    <ClInclude Include="IQuote.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -115,6 +116,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ViewTree.h" />
+    <ClInclude Include="YahooQuote.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuddyDesk.cpp" />
@@ -131,6 +133,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ViewTree.cpp" />
+    <ClCompile Include="YahooQuote.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BuddyDesk.rc" />

@@ -57,6 +57,12 @@
     <ClInclude Include="PropertiesWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="IQuote.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="YahooQuote.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuddyDesk.cpp">
@@ -90,6 +96,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="PropertiesWnd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="YahooQuote.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
