@@ -77,6 +77,21 @@ int CBuddyDeskView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+void CBuddyDeskView::OnSize(UINT nType, int cx, int cy)
+{
+	CView::OnSize(nType, cx, cy);
+
+	if (m_wndChartControl.GetSafeHwnd())
+	{
+		m_wndChartControl.MoveWindow(0, 0, cx, cy);
+	}
+}
+
+void CBuddyDeskView::OnSetFocus(CWnd* pOldWnd)
+{
+	m_wndChartControl.SetFocus();
+}
+
 BOOL CBuddyDeskView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改
