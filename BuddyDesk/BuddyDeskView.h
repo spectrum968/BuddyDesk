@@ -17,7 +17,8 @@ public:
 
 // 操作
 public:
-
+	void UpdateHistory(const CString& strCode, bool bCandleStick, int nDays = 90);
+	void AddData(CXTPChartSeries* pSeries, LPCTSTR arg, double dLow, double dHigh, double dOpen, double dClose);
 // 重写
 public:
 	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
@@ -26,6 +27,9 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+
+	void OnPrint(CDC* pDC, CPrintInfo* pInfo);
 
 // 实现
 public:
@@ -47,6 +51,11 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+
+private:
+	bool m_bCandleStick;
+	bool m_bThickLine;
+
 };
 
 #ifndef _DEBUG  // BuddyDeskView.cpp 中的调试版本

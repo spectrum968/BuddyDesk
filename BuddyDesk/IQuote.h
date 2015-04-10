@@ -5,7 +5,7 @@ public:
 	virtual ~IQuote(void)=0{};
 
 	virtual CStringArray& GetHistory(const CString& strSecId, const CTime& tStart, char ch='d') = 0;
-	virtual CStringArray& GetHistory(const CString& strSecId, const CTime& tStart, CTime& tEnd, char ch='d') = 0;
+	virtual CStringArray& GetHistory(const CString& strSecId, const CTime& tStart, const CTime& tEnd, char ch='d') = 0;
 	virtual BOOL GetTime(const CString& arrQuote, CString& strTime) = 0;
 	virtual BOOL GetOpen(const CString& arrQuote, CString& strOpen) = 0;
 	virtual BOOL GetHigh(const CString& arrQuote, CString& strHigh) = 0;

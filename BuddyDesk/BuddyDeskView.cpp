@@ -11,10 +11,14 @@
 
 #include "BuddyDeskDoc.h"
 #include "BuddyDeskView.h"
+#include "YahooQuote.h"
+#include "Util_String.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+using namespace Buddy::Util;
 
 
 // CBuddyDeskView
@@ -22,6 +26,9 @@
 IMPLEMENT_DYNCREATE(CBuddyDeskView, CView)
 
 BEGIN_MESSAGE_MAP(CBuddyDeskView, CView)
+	ON_WM_CREATE()
+	ON_WM_SIZE()
+	ON_WM_SETFOCUS()
 	// 标准打印命令
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
@@ -34,8 +41,8 @@ END_MESSAGE_MAP()
 
 CBuddyDeskView::CBuddyDeskView()
 {
-	// TODO: 在此处添加构造代码
-
+	m_bCandleStick = true;
+	m_bThickLine = false;
 }
 
 CBuddyDeskView::~CBuddyDeskView()
@@ -61,15 +68,15 @@ int CBuddyDeskView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// set chart title.
 	CXTPChartTitleCollection* pTitles = m_wndChartControl.GetContent()->GetTitles();
 	CXTPChartTitle* pTitle = pTitles->Add(new CXTPChartTitle());
-	pTitle->SetText(_T("Historical Stock Prices"));
+	pTitle->SetText(_T("历史价格"));
 
 	// set chart subtitle.
-	//CXTPChartTitle* pSubTitle = pTitles->Add(new CXTPChartTitle());
-	//pSubTitle->SetText(_T("www.codejock.com"));
-	//pSubTitle->SetDocking(xtpChartDockBottom);
-	//pSubTitle->SetAlignment(xtpChartAlignFar);
-	//pSubTitle->SetFont(CXTPChartFont::GetTahoma8());
-	//pSubTitle->SetTextColor(CXTPChartColor::Gray);
+	CXTPChartTitle* pSubTitle = pTitles->Add(new CXTPChartTitle());
+	pSubTitle->SetText(_T("桌面分析"));
+	pSubTitle->SetDocking(xtpChartDockBottom);
+	pSubTitle->SetAlignment(xtpChartAlignFar);
+	pSubTitle->SetFont(CXTPChartFont::GetTahoma8());
+	pSubTitle->SetTextColor(CXTPChartColor::Gray);
 
 	// turn off legend.
 	m_wndChartControl.GetContent()->GetLegend()->SetVisible(FALSE);
@@ -151,7 +158,91 @@ void CBuddyDeskView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 #endif
 }
+void CBuddyDeskView::AddData(CXTPChartSeries* pSeries, LPCTSTR arg, double dLow, double dHigh, double dOpen, double dClose)
+{
+	CXTPChartSeriesPoint* pPoint;	
+	pPoint = pSeries->GetPoints()->Add(new CXTPChartSeriesPoint(arg, dLow, dHigh, dOpen, dClose));	
+}
+void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, int nDays)
+{
+	m_wndChartControl.GetContent()->GetSeries()->RemoveAll();
 
+	CXTPChartSeries* pSeries = m_wndChartControl.GetContent()->GetSeries()->Add(new CXTPChartSeries());
+	pSeries->SetArgumentScaleType(xtpChartScaleDateTime);
+	
+	CTime timeEnd = CTime::GetCurrentTime();
+
+	CTime timeStart = timeEnd;
+	timeStart -= CTimeSpan(nDays,0,0,0);
+	
+	CYahooQuote	quote;
+	CStringArray& arrQuote = quote.GetHistory(strCode, timeStart, timeEnd);
+
+	
+    CXTPChartHighLowSeriesStyle* pStyle = NULL;
+    
+    if (bCandleStick)
+    {
+        pStyle = (CXTPChartHighLowSeriesStyle*)pSeries->SetStyle(new CXTPChartCandleStickSeriesStyle());
+    }
+    else
+    {
+        pStyle = (CXTPChartHighLowSeriesStyle*)pSeries->SetStyle(new CXTPChartHighLowSeriesStyle());
+    }
+    
+	pStyle->SetLineThickness(m_bThickLine ? 2 : 1);
+	m_bCandleStick = bCandleStick;
+	
+	CXTPChartDiagram2D* pDiagram = (CXTPChartDiagram2D*)pSeries->GetDiagram();
+	
+	pDiagram->GetAxisY()->GetGridLines()->SetMinorVisible(TRUE);
+	pDiagram->GetAxisY()->GetGridLines()->GetMinorLineStyle()->SetDashStyle(xtpChartDashStyleDot);
+	
+	pDiagram->GetAxisY()->GetTitle()->SetText(_T("US Dollars"));
+	pDiagram->GetAxisY()->GetTitle()->SetVisible(TRUE);
+
+	pDiagram->GetAxisY()->GetRange()->SetShowZeroLevel(FALSE);
+	
+	pDiagram->GetAxisX()->GetLabel()->SetAngle(360-30);
+	pDiagram->GetAxisX()->GetLabel()->SetAntialiasing(TRUE);
+
+
+	pSeries->SetArgumentScaleType(xtpChartScaleQualitative);
+	pDiagram->GetAxisX()->GetLabel()->SetVisible(TRUE);
+
+
+	pDiagram->GetAxisX()->GetCustomLabels()->RemoveAll();
+
+	for (int i = (int)arrQuote.GetSize() - 1; i > 0; --i)
+	{
+		CString strTime, strOpen, strHigh, strLow, strClose;
+		quote.GetTime(arrQuote[i], strTime);
+		quote.GetOpen(arrQuote[i], strOpen);
+		quote.GetHigh(arrQuote[i], strHigh);
+		quote.GetLow(arrQuote[i], strLow);
+		quote.GetClose(arrQuote[i], strClose);
+		AddData(pSeries,strTime,CStrUtil::ToDouble(strOpen),
+			CStrUtil::ToDouble(strHigh),CStrUtil::ToDouble(strLow),CStrUtil::ToDouble(strClose));
+		
+		if ((i % 10) == 0)
+		{
+			CXTPChartAxisCustomLabel* pLabel = new CXTPChartAxisCustomLabel();
+			pLabel->SetAxisValue(strTime);
+			pLabel->SetText(strTime);
+			pDiagram->GetAxisX()->GetCustomLabels()->Add(pLabel);
+		}
+	}
+}
+
+void CBuddyDeskView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+{
+	UpdateHistory(_T("MSFT"), true);
+}
+
+void CBuddyDeskView::OnPrint(CDC* pDC, CPrintInfo* pInfo)
+{
+	m_wndChartControl.PrintToDC(pDC->m_hDC, pInfo->m_rectDraw);
+}
 
 // CBuddyDeskView 诊断
 
