@@ -1,5 +1,9 @@
 #pragma once
 #include "iquote.h"
+#include <vector>
+
+using namespace std;
+
 class CYahooQuote :
 	public IQuote
 {
@@ -7,17 +11,14 @@ public:
 	CYahooQuote(void);
 	virtual ~CYahooQuote(void);
 
-	CStringArray& GetHistory(const CString& strSym, const CTime& timeStart, char ch = 'd');
-	CStringArray& GetHistory(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch = 'd');
-	BOOL GetTime(const CString& arrQuote, CString& strTime);
-	BOOL GetHigh(const CString& arrQuote, CString& strHigh);
-	BOOL GetLow(const CString& arrQuote, CString& strLow);
-	BOOL GetOpen(const CString& arrQuote, CString& strOpen);
-	BOOL GetClose(const CString& arrQuote, CString& strClose);
-	BOOL GetVolumn(const CString& arrQuote, CString& strVolumn) {return TRUE;}
-	BOOL GetAmount(const CString& arrQuote, CString& strAmount){ return TRUE;}
+	CString GetHistory(const CString& strSym, const CTime& timeStart, char ch = 'd');
+	CString GetHistory(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch = 'd');
 
 private:
-	CStringArray m_strArray;
+	void QuoteParser(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch, vector<CString>& vecQuote);
+	void QuoteAssembler(const vector<CString>& vecQuote, CString& strQuote);
+
+private:
+	vector<CString> m_vecArray;
 };
 

@@ -11,7 +11,8 @@
 
 #include "BuddyDeskDoc.h"
 #include "BuddyDeskView.h"
-#include "YahooQuote.h"
+
+#include "QuoteSimpleFactory.h"
 #include "Util_String.h"
 
 #ifdef _DEBUG
@@ -175,8 +176,10 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 	CTime timeStart = timeEnd;
 	timeStart -= CTimeSpan(nDays,0,0,0);
 	
-	CYahooQuote	quote;
-	CStringArray& arrQuote = quote.GetHistory(strCode, timeStart, timeEnd);
+	IQuote* pQuote = CQuoteSimpleFactory::CreateQuote(_T("Yahoo"));
+	CString strRet = pQuote->GetHistory(strCode, timeStart, timeEnd);
+
+	CStringArray arrQuote;
 
 	
     CXTPChartHighLowSeriesStyle* pStyle = NULL;
@@ -198,7 +201,7 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 	pDiagram->GetAxisY()->GetGridLines()->SetMinorVisible(TRUE);
 	pDiagram->GetAxisY()->GetGridLines()->GetMinorLineStyle()->SetDashStyle(xtpChartDashStyleDot);
 	
-	pDiagram->GetAxisY()->GetTitle()->SetText(_T("US Dollars"));
+	pDiagram->GetAxisY()->GetTitle()->SetText(_T("Ԫ"));
 	pDiagram->GetAxisY()->GetTitle()->SetVisible(TRUE);
 
 	pDiagram->GetAxisY()->GetRange()->SetShowZeroLevel(FALSE);
@@ -216,11 +219,11 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 	for (int i = (int)arrQuote.GetSize() - 1; i > 0; --i)
 	{
 		CString strTime, strOpen, strHigh, strLow, strClose;
-		quote.GetTime(arrQuote[i], strTime);
-		quote.GetOpen(arrQuote[i], strOpen);
-		quote.GetHigh(arrQuote[i], strHigh);
-		quote.GetLow(arrQuote[i], strLow);
-		quote.GetClose(arrQuote[i], strClose);
+		pQuote->GetTime(arrQuote[i], strTime);
+		pQuote->GetOpen(arrQuote[i], strOpen);
+		pQuote->GetHigh(arrQuote[i], strHigh);
+		pQuote->GetLow(arrQuote[i], strLow);
+		pQuote->GetClose(arrQuote[i], strClose);
 		AddData(pSeries,strTime,CStrUtil::ToDouble(strOpen),
 			CStrUtil::ToDouble(strHigh),CStrUtil::ToDouble(strLow),CStrUtil::ToDouble(strClose));
 		
@@ -232,6 +235,9 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 			pDiagram->GetAxisX()->GetCustomLabels()->Add(pLabel);
 		}
 	}
+
+	delete pQuote;
+	pQuote = 0;
 }
 
 void CBuddyDeskView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)

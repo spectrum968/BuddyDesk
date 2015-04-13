@@ -13,9 +13,9 @@ CYahooQuote::~CYahooQuote(void)
 {
 }
 
-CStringArray& CYahooQuote::GetHistory(const CString& strSym, const CTime& timeStart, char ch)
+CString CYahooQuote::GetHistory(const CString& strSym, const CTime& timeStart, char ch)
 {
-	m_strArray.RemoveAll();
+	m_vecArray.clear();
 
 	CString strUrl;
 	strUrl.Format(_T("http://ichart.finance.yahoo.com/table.csv?s=%s&a=%.2i&b=%i&c=%i&g=%c"),
@@ -36,7 +36,7 @@ CStringArray& CYahooQuote::GetHistory(const CString& strSym, const CTime& timeSt
 #ifdef _UNICODE
 			strRead = CString((LPCSTR)(LPCTSTR)strRead);
 #endif
-			m_strArray.Add(strRead);
+			m_vecArray.push_back(strRead);
 		}
 
 		pFile->Close();
@@ -44,13 +44,19 @@ CStringArray& CYahooQuote::GetHistory(const CString& strSym, const CTime& timeSt
 	}
 
 	session.Close();
-	return m_strArray;
+	return _T("");
 }
 
-CStringArray& CYahooQuote::GetHistory(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch)
+CString CYahooQuote::GetHistory(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch)
 {
-	m_strArray.RemoveAll();
+	m_vecArray.clear();
 
+
+	return _T("");
+}
+
+void CYahooQuote::QuoteParser(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch, vector<CString>& vecQuote)
+{
 	// format URL to pass to GetHttpConnection.
 	CString strURL;
 
@@ -75,7 +81,7 @@ CStringArray& CYahooQuote::GetHistory(const CString& strSym, const CTime& timeSt
 #ifdef _UNICODE
 			strRead = CString((LPCSTR)(LPCTSTR)strRead);
 #endif
-			m_strArray.Add(strRead);
+			vecQuote.push_back(strRead);
 		}
 		
 		pFile->Close();
@@ -83,30 +89,11 @@ CStringArray& CYahooQuote::GetHistory(const CString& strSym, const CTime& timeSt
 	}
 	
 	session.Close();
-	return m_strArray;
+
+	return;
 }
 
-BOOL CYahooQuote::GetTime(const CString& arrQuote, CString& strTime)
+void CYahooQuote::QuoteAssembler(const vector<CString>& vecQuote, CString& strQuote)
 {
-	return AfxExtractSubString(strTime, arrQuote, 0, ',');
-}
-
-BOOL CYahooQuote::GetOpen(const CString& arrQuote, CString& strOpen)
-{
-	return AfxExtractSubString(strOpen, arrQuote, 1, ',');
-}
-
-BOOL CYahooQuote::GetHigh(const CString& arrQuote, CString& strHigh)
-{
-	return AfxExtractSubString(strHigh, arrQuote, 2, ',');
-}
-
-BOOL CYahooQuote::GetLow(const CString& arrQuote, CString& strLow)
-{
-	return AfxExtractSubString(strLow, arrQuote, 3, ',');
-}
-
-BOOL CYahooQuote::GetClose(const CString& arrQuote, CString& strClose)
-{
-	return AfxExtractSubString(strClose, arrQuote, 4, ',');
+	
 }
