@@ -11,12 +11,12 @@ public:
 	CYahooQuote(void);
 	virtual ~CYahooQuote(void);
 
-	CString GetHistory(const CString& strSym, const CTime& timeStart, char ch = 'd');
-	CString GetHistory(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch = 'd');
+	CString GetHistory(const CString& strId, const CTime& timeStart, char ch = 'd', long lNum = 90);
+	CString GetHistory(const CString& strId, const CTime& timeStart, const CTime& timeEnd, char ch = 'd', long lNum = 90);
 
 private:
-	void QuoteParser(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch, vector<CString>& vecQuote);
-	void QuoteAssembler(const vector<CString>& vecQuote, CString& strQuote);
+	void QuoteParser(const CString& strId, const CTime& timeStart, const CTime& timeEnd, char ch, long lNum, vector<CString>& vecQuote);
+	void QuoteAssembler(const CString& strId, const vector<CString>& vecQuote, CString& strQuote);
 
 private:
 	vector<CString> m_vecArray;

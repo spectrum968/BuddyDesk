@@ -219,11 +219,11 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 	for (int i = (int)arrQuote.GetSize() - 1; i > 0; --i)
 	{
 		CString strTime, strOpen, strHigh, strLow, strClose;
-		pQuote->GetTime(arrQuote[i], strTime);
-		pQuote->GetOpen(arrQuote[i], strOpen);
-		pQuote->GetHigh(arrQuote[i], strHigh);
-		pQuote->GetLow(arrQuote[i], strLow);
-		pQuote->GetClose(arrQuote[i], strClose);
+		//pQuote->GetTime(arrQuote[i], strTime);
+		//pQuote->GetOpen(arrQuote[i], strOpen);
+		//pQuote->GetHigh(arrQuote[i], strHigh);
+		//pQuote->GetLow(arrQuote[i], strLow);
+		//pQuote->GetClose(arrQuote[i], strClose);
 		AddData(pSeries,strTime,CStrUtil::ToDouble(strOpen),
 			CStrUtil::ToDouble(strHigh),CStrUtil::ToDouble(strLow),CStrUtil::ToDouble(strClose));
 		

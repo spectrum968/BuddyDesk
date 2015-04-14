@@ -2,7 +2,9 @@
 #include "YahooQuote.h"
 
 #include <afxinet.h>
+#include "Util_String.h"
 
+using namespace Buddy::Util;
 
 CYahooQuote::CYahooQuote(void)
 {
@@ -13,55 +15,35 @@ CYahooQuote::~CYahooQuote(void)
 {
 }
 
-CString CYahooQuote::GetHistory(const CString& strSym, const CTime& timeStart, char ch)
+CString CYahooQuote::GetHistory(const CString& strId, const CTime& timeStart, char ch, long lNum)
 {
-	m_vecArray.clear();
+	vector<CString> vecQuotes;
 
-	CString strUrl;
-	strUrl.Format(_T("http://ichart.finance.yahoo.com/table.csv?s=%s&a=%.2i&b=%i&c=%i&g=%c"),
-		strSym,
-		timeStart.GetMonth()-1,
-		timeStart.GetDay(),
-		timeStart.GetYear(),
-		ch);
+	CTime timeEnd = CTime::GetCurrentTime();
+	QuoteParser(strId, timeStart, timeEnd, ch, lNum, vecQuotes);
+	CString strQuote;
+	QuoteAssembler(strId, vecQuotes, strQuote);
 
-	CInternetSession session;
-	CStdioFile* pFile = session.OpenURL(strUrl);
-
-	if (pFile)
-	{
-		CString strRead;
-		while (pFile->ReadString(strRead))
-		{
-#ifdef _UNICODE
-			strRead = CString((LPCSTR)(LPCTSTR)strRead);
-#endif
-			m_vecArray.push_back(strRead);
-		}
-
-		pFile->Close();
-		delete pFile;
-	}
-
-	session.Close();
-	return _T("");
+	return strQuote;
 }
 
-CString CYahooQuote::GetHistory(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch)
+CString CYahooQuote::GetHistory(const CString& strId, const CTime& timeStart, const CTime& timeEnd, char ch, long lNum)
 {
-	m_vecArray.clear();
+	vector<CString> vecQuotes;
+	QuoteParser(strId, timeStart, timeEnd, ch, lNum, vecQuotes);
+	CString strQuote;
+	QuoteAssembler(strId, vecQuotes, strQuote);
 
-
-	return _T("");
+	return strQuote;
 }
 
-void CYahooQuote::QuoteParser(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch, vector<CString>& vecQuote)
+void CYahooQuote::QuoteParser(const CString& strId, const CTime& timeStart, const CTime& timeEnd, char ch, long lNum, vector<CString>& vecQuote)
 {
 	// format URL to pass to GetHttpConnection.
 	CString strURL;
 
 	strURL.Format(_T("http://ichart.finance.yahoo.com/table.csv?s=%s&a=%.2i&b=%i&c=%i&d=%.2i&e=%i&f=%i&g=%c"),
-		strSym,
+		strId,
 		timeStart.GetMonth()-1,
 		timeStart.GetDay(),
 		timeStart.GetYear(),
@@ -93,7 +75,32 @@ void CYahooQuote::QuoteParser(const CString& strSym, const CTime& timeStart, con
 	return;
 }
 
-void CYahooQuote::QuoteAssembler(const vector<CString>& vecQuote, CString& strQuote)
+void CYahooQuote::QuoteAssembler(const CString& strId, const vector<CString>& vecQuote, CString& strQuote)
 {
-	
+	CString strDate, strOpen, strHigh, strLow, strClose;
+	CString strRet(_T("<root>"));
+	strRet.AppendFormat(_T("<sec id=\"%s\">"), strId);
+	bool bHead = true;
+
+	vector<CString>::const_iterator itQuote = vecQuote.begin();
+	for ( ; itQuote!=vecQuote.end(); itQuote++)
+	{
+		if(bHead)
+		{
+			bHead = false;
+			continue;
+		}
+
+		vector<CString> vecTemp;
+		CStrUtil::SplitString(*itQuote, vecTemp);
+		strRet.AppendFormat(_T("<quote time=\"%s\" open=\"%s\" high=\"%s\" low=\"%s\" close=\"%s\" />"),
+			vecTemp[0], vecTemp[1], vecTemp[2], vecTemp[3], vecTemp[4]);
+		
+	}
+
+	strRet.Append(_T("</secd></root>"));
+
+	strQuote = strRet;
+
+	return;
 }
