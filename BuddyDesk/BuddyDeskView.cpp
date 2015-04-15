@@ -12,7 +12,7 @@
 #include "BuddyDeskDoc.h"
 #include "BuddyDeskView.h"
 
-#include "QuoteSimpleFactory.h"
+#include "QuoteWapper.h"
 #include "Util_String.h"
 
 #ifdef _DEBUG
@@ -171,13 +171,12 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 	CXTPChartSeries* pSeries = m_wndChartControl.GetContent()->GetSeries()->Add(new CXTPChartSeries());
 	pSeries->SetArgumentScaleType(xtpChartScaleDateTime);
 	
-	CTime timeEnd = CTime::GetCurrentTime();
+	COleDateTime dtEnd = COleDateTime::GetCurrentTime();
 
-	CTime timeStart = timeEnd;
-	timeStart -= CTimeSpan(nDays,0,0,0);
+	COleDateTime dtStart = dtEnd;
+	dtStart -= COleDateTimeSpan(nDays,0,0,0);
 	
-	IQuote* pQuote = CQuoteSimpleFactory::CreateQuote(_T("Yahoo"));
-	CString strRet = pQuote->GetHistory(strCode, timeStart, timeEnd);
+	CQuoteWapper::ParseQuote(_T("MSFT"), dtStart, dtEnd);
 
 	CStringArray arrQuote;
 
@@ -236,8 +235,8 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 		}
 	}
 
-	delete pQuote;
-	pQuote = 0;
+	delete pQuoteLoader;
+	pQuoteLoader = 0;
 }
 
 void CBuddyDeskView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)

@@ -3,13 +3,13 @@
 #include "YahooQuote.h"
 #include "TDXQuote.h"
 
-class CQuoteSimpleFactory
+class CQuoteLoaderSimpleFactory
 {
 public:
-	CQuoteSimpleFactory(void);
-	~CQuoteSimpleFactory(void);
+	CQuoteLoaderSimpleFactory(void);
+	~CQuoteLoaderSimpleFactory(void);
 
 public:
-	static IQuote* CreateQuote(const CString& strSource);
+	static IQuoteLoader* CreateQuote(const CString& strSource);
 };
 

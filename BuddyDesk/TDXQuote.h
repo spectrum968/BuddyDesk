@@ -5,7 +5,7 @@
 using namespace std;
 
 class CTDXQuote :
-	public IQuote
+	public IQuoteLoader
 {
 public:
 	CTDXQuote(void);

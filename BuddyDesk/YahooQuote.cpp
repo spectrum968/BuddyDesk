@@ -15,41 +15,42 @@ CYahooQuote::~CYahooQuote(void)
 {
 }
 
-CString CYahooQuote::GetHistory(const CString& strId, const CTime& timeStart, char ch, long lNum)
+CString CYahooQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, char ch, long lNum)
 {
 	vector<CString> vecQuotes;
 
-	CTime timeEnd = CTime::GetCurrentTime();
-	QuoteParser(strId, timeStart, timeEnd, ch, lNum, vecQuotes);
+	COleDateTime dtEnd;
+	dtEnd = COleDateTime::GetCurrentTime();
+	QuoteParser(strId, dtStart, dtEnd, ch, lNum, vecQuotes);
 	CString strQuote;
 	QuoteAssembler(strId, vecQuotes, strQuote);
 
 	return strQuote;
 }
 
-CString CYahooQuote::GetHistory(const CString& strId, const CTime& timeStart, const CTime& timeEnd, char ch, long lNum)
+CString CYahooQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum)
 {
 	vector<CString> vecQuotes;
-	QuoteParser(strId, timeStart, timeEnd, ch, lNum, vecQuotes);
+	QuoteParser(strId, dtStart, dtEnd, ch, lNum, vecQuotes);
 	CString strQuote;
 	QuoteAssembler(strId, vecQuotes, strQuote);
 
 	return strQuote;
 }
 
-void CYahooQuote::QuoteParser(const CString& strId, const CTime& timeStart, const CTime& timeEnd, char ch, long lNum, vector<CString>& vecQuote)
+void CYahooQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum, vector<CString>& vecQuote)
 {
 	// format URL to pass to GetHttpConnection.
 	CString strURL;
 
 	strURL.Format(_T("http://ichart.finance.yahoo.com/table.csv?s=%s&a=%.2i&b=%i&c=%i&d=%.2i&e=%i&f=%i&g=%c"),
 		strId,
-		timeStart.GetMonth()-1,
-		timeStart.GetDay(),
-		timeStart.GetYear(),
-		timeEnd.GetMonth()-1,
-		timeEnd.GetDay(),
-		timeEnd.GetYear(),
+		dtStart.GetMonth(),
+		dtStart.GetDay(),
+		dtStart.GetYear(),
+		dtEnd.GetMonth(),
+		dtEnd.GetDay(),
+		dtEnd.GetYear(),
 		ch);
 
 	CInternetSession session;

@@ -2,16 +2,16 @@
 #include "QuoteSimpleFactory.h"
 
 
-CQuoteSimpleFactory::CQuoteSimpleFactory(void)
+CQuoteLoaderSimpleFactory::CQuoteLoaderSimpleFactory(void)
 {
 }
 
 
-CQuoteSimpleFactory::~CQuoteSimpleFactory(void)
+CQuoteLoaderSimpleFactory::~CQuoteLoaderSimpleFactory(void)
 {
 }
 
-IQuote* CQuoteSimpleFactory::CreateQuote(const CString& strSource)
+IQuoteLoader* CQuoteLoaderSimpleFactory::CreateQuote(const CString& strSource)
 {
 	if(strSource.CompareNoCase(_T("Yahoo")) == 0)
 	{
@@ -21,4 +21,6 @@ IQuote* CQuoteSimpleFactory::CreateQuote(const CString& strSource)
 	//{
 	//	return new CTDXQuote();
 	//}
+
+	return NULL;
 }

@@ -72,6 +72,9 @@
     <ClInclude Include="QuoteSimpleFactory.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="QuoteWapper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuddyDesk.cpp">
@@ -117,6 +120,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="QuoteSimpleFactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="QuoteWapper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
