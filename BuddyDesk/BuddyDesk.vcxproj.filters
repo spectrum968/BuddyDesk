@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="数据库操作类">
+      <UniqueIdentifier>{a1b8a5e7-0019-4c5f-b971-43b0095905dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="工具类">
+      <UniqueIdentifier>{0998e1fe-5e8d-41b5-94b0-c91063e73f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="业务逻辑类">
+      <UniqueIdentifier>{acc8634c-0520-45b4-8c80-4db406e8a3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="全局设置类">
+      <UniqueIdentifier>{839e89e9-9e4d-4217-bb0e-4eb319d826cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -60,20 +72,47 @@
     <ClInclude Include="IQuote.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="YahooQuote.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="DBOperator.h">
+      <Filter>数据库操作类</Filter>
     </ClInclude>
     <ClInclude Include="Util_String.h">
-      <Filter>头文件</Filter>
+      <Filter>工具类</Filter>
     </ClInclude>
-    <ClInclude Include="TDXQuote.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="QuoteSimpleFactory.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="Util_XMLDOM.h">
+      <Filter>工具类</Filter>
     </ClInclude>
     <ClInclude Include="QuoteWapper.h">
+      <Filter>业务逻辑类</Filter>
+    </ClInclude>
+    <ClInclude Include="QuoteSimpleFactory.h">
+      <Filter>业务逻辑类</Filter>
+    </ClInclude>
+    <ClInclude Include="Quotes.h">
+      <Filter>业务逻辑类</Filter>
+    </ClInclude>
+    <ClInclude Include="TDXQuote.h">
+      <Filter>业务逻辑类</Filter>
+    </ClInclude>
+    <ClInclude Include="YahooQuote.h">
+      <Filter>业务逻辑类</Filter>
+    </ClInclude>
+    <ClInclude Include="IDBInterface.h">
+      <Filter>数据库操作类</Filter>
+    </ClInclude>
+    <ClInclude Include="LitMT.h">
+      <Filter>工具类</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>工具类</Filter>
+    </ClInclude>
+    <ClInclude Include="QuoteDB.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GSetting.h">
+      <Filter>全局设置类</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstDef.h">
+      <Filter>全局设置类</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -110,20 +149,44 @@
     <ClCompile Include="PropertiesWnd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="YahooQuote.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="DBOperator.cpp">
+      <Filter>数据库操作类</Filter>
+    </ClCompile>
+    <ClCompile Include="Util_XMLDOM.cpp">
+      <Filter>工具类</Filter>
     </ClCompile>
     <ClCompile Include="Util_String.cpp">
-      <Filter>源文件</Filter>
+      <Filter>工具类</Filter>
     </ClCompile>
-    <ClCompile Include="TDXQuote.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Quotes.cpp">
+      <Filter>业务逻辑类</Filter>
     </ClCompile>
     <ClCompile Include="QuoteSimpleFactory.cpp">
-      <Filter>源文件</Filter>
+      <Filter>业务逻辑类</Filter>
     </ClCompile>
     <ClCompile Include="QuoteWapper.cpp">
+      <Filter>业务逻辑类</Filter>
+    </ClCompile>
+    <ClCompile Include="TDXQuote.cpp">
+      <Filter>业务逻辑类</Filter>
+    </ClCompile>
+    <ClCompile Include="YahooQuote.cpp">
+      <Filter>业务逻辑类</Filter>
+    </ClCompile>
+    <ClCompile Include="IDBInterface.cpp">
+      <Filter>数据库操作类</Filter>
+    </ClCompile>
+    <ClCompile Include="Litmt.cpp">
+      <Filter>工具类</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>工具类</Filter>
+    </ClCompile>
+    <ClCompile Include="QuoteDB.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GSetting.cpp">
+      <Filter>全局设置类</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,5 +275,10 @@
     <None Include="res\BuddyDesk.rc2">
       <Filter>资源文件</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="BuddyConfig.xml">
+      <Filter>全局设置类</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

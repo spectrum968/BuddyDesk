@@ -52,4 +52,10 @@
 #endif
 #endif
 
+#include "Log.h"
+#include "Util_String.h"
+#include "Util_XMLDOM.h"
+
+using namespace Buddy::Util;
+
 

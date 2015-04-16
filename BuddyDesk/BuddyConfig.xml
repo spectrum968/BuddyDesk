@@ -1,0 +1,24 @@
+<buddy>
+	<configuration default="laptop"/>
+	<settings mode="laptop">
+		<setting n="execute_path" v="c:\Projects\BuddyDesk\Debug\"/>
+		<setting n="tdx_path" v="c:\zd_zszq\"/>
+		<setting n="data_path" v="c:\zd_zszq\T0002\export\"/>
+		<setting n="sql_server" v="LEIZT-MBA"/>
+		<setting n="sql_db" v="BUDDYDB"/>
+	</settings>
+	<settings mode="office">
+		<setting n="execute_path" v=""/>
+		<setting n="tdx_path" v="d:\new_zszq\"/>
+		<setting n="data_path" v="d:\new_zszq\T0002\export\"/>
+		<setting n="sql_server" v="SZPC1200\BUDDYDB"/>
+		<setting n="sql_db" v="BUDDY_DATA"/>
+	</settings>
+	<settings mode="home">
+		<setting n="execute_path" v=""/>
+		<setting n="tdx_path" v="d:\new_zszq\"/>
+		<setting n="data_path" v="d:\new_zszq\T0002\export\"/>
+		<setting n="sql_server" v="XIAOLEI\BUDDYDB"/>
+		<setting n="sql_db" v="BUDDYDB"/>
+	</settings>	
+</buddy>

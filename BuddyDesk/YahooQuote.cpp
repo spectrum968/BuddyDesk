@@ -2,9 +2,6 @@
 #include "YahooQuote.h"
 
 #include <afxinet.h>
-#include "Util_String.h"
-
-using namespace Buddy::Util;
 
 CYahooQuote::CYahooQuote(void)
 {
@@ -23,7 +20,7 @@ CString CYahooQuote::GetHistory(const CString& strId, const COleDateTime& dtStar
 	dtEnd = COleDateTime::GetCurrentTime();
 	QuoteParser(strId, dtStart, dtEnd, ch, lNum, vecQuotes);
 	CString strQuote;
-	QuoteAssembler(strId, vecQuotes, strQuote);
+	QuoteAssembler(strId, ch, vecQuotes, strQuote);
 
 	return strQuote;
 }
@@ -33,7 +30,7 @@ CString CYahooQuote::GetHistory(const CString& strId, const COleDateTime& dtStar
 	vector<CString> vecQuotes;
 	QuoteParser(strId, dtStart, dtEnd, ch, lNum, vecQuotes);
 	CString strQuote;
-	QuoteAssembler(strId, vecQuotes, strQuote);
+	QuoteAssembler(strId, ch, vecQuotes, strQuote);
 
 	return strQuote;
 }
@@ -76,11 +73,11 @@ void CYahooQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart,
 	return;
 }
 
-void CYahooQuote::QuoteAssembler(const CString& strId, const vector<CString>& vecQuote, CString& strQuote)
+void CYahooQuote::QuoteAssembler(const CString& strId, char ch, const vector<CString>& vecQuote, CString& strQuote)
 {
 	CString strDate, strOpen, strHigh, strLow, strClose;
 	CString strRet(_T("<root>"));
-	strRet.AppendFormat(_T("<sec id=\"%s\">"), strId);
+	strRet.AppendFormat(_T("<sec id=\"%s\" type=\"%s\">"), strId, ch);
 	bool bHead = true;
 
 	vector<CString>::const_iterator itQuote = vecQuote.begin();
@@ -99,7 +96,7 @@ void CYahooQuote::QuoteAssembler(const CString& strId, const vector<CString>& ve
 		
 	}
 
-	strRet.Append(_T("</secd></root>"));
+	strRet.Append(_T("</sec></root>"));
 
 	strQuote = strRet;
 

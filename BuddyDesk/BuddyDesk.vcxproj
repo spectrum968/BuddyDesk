@@ -55,6 +55,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -107,11 +108,19 @@
     <ClInclude Include="BuddyDeskView.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
+    <ClInclude Include="ConstDef.h" />
+    <ClInclude Include="DBOperator.h" />
     <ClInclude Include="FileView.h" />
+    <ClInclude Include="GSetting.h" />
+    <ClInclude Include="IDBInterface.h" />
     <ClInclude Include="IQuote.h" />
+    <ClInclude Include="LitMT.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="PropertiesWnd.h" />
+    <ClInclude Include="QuoteDB.h" />
+    <ClInclude Include="Quotes.h" />
     <ClInclude Include="QuoteSimpleFactory.h" />
     <ClInclude Include="QuoteWapper.h" />
     <ClInclude Include="Resource.h" />
@@ -119,6 +128,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TDXQuote.h" />
     <ClInclude Include="Util_String.h" />
+    <ClInclude Include="Util_XMLDOM.h" />
     <ClInclude Include="ViewTree.h" />
     <ClInclude Include="YahooQuote.h" />
   </ItemGroup>
@@ -128,10 +138,17 @@
     <ClCompile Include="BuddyDeskView.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="DBOperator.cpp" />
     <ClCompile Include="FileView.cpp" />
+    <ClCompile Include="GSetting.cpp" />
+    <ClCompile Include="IDBInterface.cpp" />
+    <ClCompile Include="Litmt.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
+    <ClCompile Include="QuoteDB.cpp" />
+    <ClCompile Include="Quotes.cpp" />
     <ClCompile Include="QuoteSimpleFactory.cpp" />
     <ClCompile Include="QuoteWapper.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -140,6 +157,7 @@
     </ClCompile>
     <ClCompile Include="TDXQuote.cpp" />
     <ClCompile Include="Util_String.cpp" />
+    <ClCompile Include="Util_XMLDOM.cpp" />
     <ClCompile Include="ViewTree.cpp" />
     <ClCompile Include="YahooQuote.cpp" />
   </ItemGroup>
@@ -175,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\BuddyDesk.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="BuddyConfig.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

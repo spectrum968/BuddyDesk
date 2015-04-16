@@ -234,9 +234,6 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 			pDiagram->GetAxisX()->GetCustomLabels()->Add(pLabel);
 		}
 	}
-
-	delete pQuoteLoader;
-	pQuoteLoader = 0;
 }
 
 void CBuddyDeskView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)

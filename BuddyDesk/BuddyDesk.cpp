@@ -12,6 +12,9 @@
 #include "BuddyDeskDoc.h"
 #include "BuddyDeskView.h"
 
+#include "GSetting.h"
+#include "ConstDef.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -108,6 +111,14 @@ BOOL CBuddyDeskApp::InitInstance()
 	ttParams.m_bVislManagerTheme = TRUE;
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
 		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
+
+
+	TCHAR apppath[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, apppath);
+	const CString strPath(apppath);
+	const CString strXmlFile = strPath + _T('\\') + cst_CONFIG_FILE;
+	if (!CGSetting::GetInstance()->LoadConfig(strXmlFile))
+		return FALSE;
 
 	// 注册应用程序的文档模板。文档模板
 	// 将用作文档、框架窗口和视图之间的连接

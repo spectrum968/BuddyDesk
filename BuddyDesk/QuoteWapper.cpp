@@ -2,6 +2,7 @@
 #include "QuoteWapper.h"
 #include <thread>
 #include "QuoteSimpleFactory.h"
+#include "Quotes.h"
 
 using namespace std;
 
@@ -9,9 +10,13 @@ void thread_task(const CString& strCode, const COleDateTime& dtStart, const COle
 {
 	IQuoteLoader* pQuoteLoader = CQuoteLoaderSimpleFactory::CreateQuote(_T("Yahoo"));
 	CString strXml = pQuoteLoader->GetHistory(strCode, dtStart, dtEnd, ch, lNum);
-
 	delete pQuoteLoader;
 	pQuoteLoader = NULL;
+
+	CQuotes quote;
+	quote.Init(strXml);
+
+
 }
 
 
