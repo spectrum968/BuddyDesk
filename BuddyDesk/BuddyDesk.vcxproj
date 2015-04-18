@@ -108,6 +108,7 @@
     <ClInclude Include="BuddyDeskView.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
+    <ClInclude Include="CommonTool.h" />
     <ClInclude Include="ConstDef.h" />
     <ClInclude Include="DBOperator.h" />
     <ClInclude Include="FileView.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="BuddyDeskView.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="CommonTool.cpp" />
     <ClCompile Include="DBOperator.cpp" />
     <ClCompile Include="FileView.cpp" />
     <ClCompile Include="GSetting.cpp" />

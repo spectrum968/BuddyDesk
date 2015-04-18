@@ -17,10 +17,10 @@ IQuoteLoader* CQuoteLoaderSimpleFactory::CreateQuote(const CString& strSource)
 	{
 		return new CYahooQuote();
 	}
-	//else if(strSource.CompareNoCase(_T("Tdx")) == 0)
-	//{
-	//	return new CTDXQuote();
-	//}
+	else if(strSource.CompareNoCase(_T("Tdx")) == 0)
+	{
+		return new CTDXQuote();
+	}
 
 	return NULL;
 }

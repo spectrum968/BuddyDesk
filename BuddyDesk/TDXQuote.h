@@ -11,10 +11,12 @@ public:
 	CTDXQuote(void);
 	virtual ~CTDXQuote(void);
 
-	//CString GetHistory(const CString& strSym, const CTime& timeStart, char ch = 'd');
-	//CString GetHistory(const CString& strSym, const CTime& timeStart, const CTime& timeEnd, char ch = 'd');
+	CString GetHistory(const CString& strId, const COleDateTime& dtStart, char ch = 'd', long lNum = 90);
+	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch = 'd', long lNum = 90);
 
 private:
-	vector<CString> m_vecArray;
+	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum, vector<CString>& vecQuote);
+	void QuoteAssembler(const CString& strId, char ch, const vector<CString>& vecQuote, CString& strQuote);
+	bool GetFileList(const CString& strTdxFolder, vector<CString>& vecFiles);
 };
 

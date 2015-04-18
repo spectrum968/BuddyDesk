@@ -114,6 +114,9 @@
     <ClInclude Include="ConstDef.h">
       <Filter>全局设置类</Filter>
     </ClInclude>
+    <ClInclude Include="CommonTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuddyDesk.cpp">
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="GSetting.cpp">
       <Filter>全局设置类</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonTool.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -60,7 +60,7 @@ CString CGSetting::GetString(const CString& strName)
 }
 bool CGSetting::LoadConfig(const CString& strConfigFilePath)
 {
-	CLog::Log(_T("CDataDealer."), _T("enter method LoadConfig"));
+	OutputDebugString(_T("enter method LoadConfig"));
 
 	CXmlDocument xmlDoc;
 	xmlDoc.Load(strConfigFilePath);
