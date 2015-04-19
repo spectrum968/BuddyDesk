@@ -17,6 +17,5 @@ public:
 private:
 	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum, vector<CString>& vecQuote);
 	void QuoteAssembler(const CString& strId, char ch, const vector<CString>& vecQuote, CString& strQuote);
-	bool GetFileList(const CString& strTdxFolder, vector<CString>& vecFiles);
 };
 

@@ -8,7 +8,7 @@ using namespace std;
 
 void thread_task(const CString& strCode, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum)
 {
-	IQuoteLoader* pQuoteLoader = CQuoteLoaderSimpleFactory::CreateQuote(_T("Yahoo"));
+	IQuoteLoader* pQuoteLoader = CQuoteLoaderSimpleFactory::CreateQuote(_T("TDX"));
 	CString strXml = pQuoteLoader->GetHistory(strCode, dtStart, dtEnd, ch, lNum);
 	delete pQuoteLoader;
 	pQuoteLoader = NULL;

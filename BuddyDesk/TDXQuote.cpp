@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "TDXQuote.h"
+#include "GSetting.h"
+#include "CommonTool.h"
 
 
 CTDXQuote::CTDXQuote(void)
@@ -36,15 +38,14 @@ CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart,
 
 void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum, vector<CString>& vecQuote)
 {
+	vector<CString> vecFiles;
+	CString strFolder = CGSetting::GetInstance()->GetString(cst_DATA_PATH);
+	CCommonTool::GetFiles(strFolder, vecFiles);
+
 	return;
 }
 
 void CTDXQuote::QuoteAssembler(const CString& strId, char ch, const vector<CString>& vecQuote, CString& strQuote)
 {
 	return;
-}
-
-bool CTDXQuote::GetFileList(const CString& strTdxFolder, vector<CString>& vecFiles)
-{
-	
 }

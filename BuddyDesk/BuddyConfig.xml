@@ -15,7 +15,7 @@
 		<setting n="sql_db" v="BUDDY_DATA"/>
 	</settings>
 	<settings mode="home">
-		<setting n="execute_path" v=""/>
+		<setting n="execute_path" v="f:\Project\BuddyDesk\Debug\"/>
 		<setting n="tdx_path" v="d:\new_zszq\"/>
 		<setting n="data_path" v="d:\new_zszq\T0002\export\"/>
 		<setting n="sql_server" v="XIAOLEI\BUDDYDB"/>

@@ -9,6 +9,9 @@
 #define VC_EXTRALEAN            // 从 Windows 头中排除极少使用的资料
 #endif
 
+#define _CRT_SECURE_NO_DEPRECATE
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
+
 #include "targetver.h"
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // 某些 CString 构造函数将是显式的
@@ -52,6 +55,7 @@
 #endif
 #endif
 
+#include "ConstDef.h"
 #include "Log.h"
 #include "Util_String.h"
 #include "Util_XMLDOM.h"

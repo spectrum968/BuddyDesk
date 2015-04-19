@@ -43,7 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>c:\Projects\BuddyDesk\Debug\Lib\;$(DOENVROOT)\$(Configuration)\Lib;$(DOENVROOT)\$(Configuration)\Bin;$(DOENVROOT_SS)\ShareSoftware\boost\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>F:\Project\BuddyDesk\Debug\Lib\;$(DOENVROOT)\$(Configuration)\Lib;$(DOENVROOT)\$(Configuration)\Bin;$(DOENVROOT_SS)\ShareSoftware\boost\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
