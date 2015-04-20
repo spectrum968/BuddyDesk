@@ -39,7 +39,7 @@ CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart,
 void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum, vector<CString>& vecQuote)
 {
 	vector<CString> vecFiles;
-	CString strFolder = CGSetting::GetInstance()->GetString(cst_DATA_PATH);
+	CString strFolder = CGSetting::GetInstance()->GetString(cst_TDX_PATH);
 	CCommonTool::GetFiles(strFolder, vecFiles);
 
 	return;

@@ -3,7 +3,7 @@
 	<settings mode="laptop">
 		<setting n="execute_path" v="c:\Projects\BuddyDesk\Debug\"/>
 		<setting n="tdx_path" v="c:\zd_zszq\"/>
-		<setting n="data_path" v="c:\zd_zszq\T0002\export\"/>
+		<setting n="export_data_path" v="c:\zd_zszq\T0002\export\"/>
 		<setting n="sql_server" v="LEIZT-MBA"/>
 		<setting n="sql_db" v="BUDDYDB"/>
 	</settings>

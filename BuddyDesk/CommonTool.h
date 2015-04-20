@@ -8,6 +8,7 @@ public:
 	~CCommonTool(void);
 
 public:
-	static bool GetFiles(const CString& strFolder, vector<CString>& vecFiles);
+	static bool GetFiles(const CString& strFolder, const CString& strId, vector<CString>& vecFiles, char ch= 'd');
+	static vector<CString> GetDataFileName(const CString& strFolder, const CString& strId, char ch);
 };
 

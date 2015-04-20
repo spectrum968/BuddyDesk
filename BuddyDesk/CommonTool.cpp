@@ -13,24 +13,24 @@ CCommonTool::~CCommonTool(void)
 {
 }
 
-bool CCommonTool::GetFiles(const CString& strFolder, vector<CString>& vecFiles)
+bool CCommonTool::GetFiles(const CString& strFolder, const CString& strId, vector<CString>& vecFiles, char ch)
 {
-	
-	CString strFolderName = strFolder;
-	HANDLE hFile = 0;
-	WIN32_FIND_DATA fileData;
-	char line[1024];
-	wchar_t fn[1000];
+	CString strSHDay = strFolder+_T("\\")+cst_DATA_FOLDER+_T("\\")+cst_SH+_T("\\")+ ch=='d' ? cst_DAY_FOLDER : ;
+	CString strSZDay = strFolder
+
 	try
 	{
-		mbstowcs(fn,(const char*)strFolderName.GetBuffer(), 999);
-		hFile = FindFirstFile(fn, &fileData);
-		FindNextFile(hFile, &fileData);
-		while (FindNextFile(hFile, &fileData))
-		{
-			wcstombs(line, (const wchar_t*)fileData.cFileName, 259);
-			vecFiles.push_back(CString(line));
-		}
+		CFileFind FileFinder;
+		bool bFound = (FileFinder.FindFile(strFileName)==TRUE);
+		if (!bFound)
+			return false;
+		while (bFound)  
+		{  
+			bFound = (FileFinder.FindNextFile()==TRUE); 
+			CString strDelFilePath  = FileFinder.GetFilePath();  
+			vecFiles.push_back(strDelFilePath);
+		}  
+		FileFinder.Close();
 	}
 	catch( ... )
 	{
@@ -39,4 +39,9 @@ bool CCommonTool::GetFiles(const CString& strFolder, vector<CString>& vecFiles)
 	}
 
 	return true;
+}
+vector<CString> CCommonTool::GetDataFileName(const CString& strFolder, const CString& strId, char ch)
+{
+	CString strFilePath;
+	strFilePath.Format(_T("%s\\%s\\%s\\%s\\%s\\*%s"), strFolder, cst_DATA_FOLDER, );
 }
