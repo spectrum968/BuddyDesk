@@ -8,7 +8,11 @@ public:
 	~CCommonTool(void);
 
 public:
-	static bool GetFiles(const CString& strFolder, const CString& strId, vector<CString>& vecFiles, char ch= 'd');
-	static vector<CString> GetDataFileName(const CString& strFolder, const CString& strId, char ch);
+	//TDX
+	static bool GetTDXFiles(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote, vector<CString>& vecFiles);
+	static vector<CString> GetTDXDataFileName(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote);
+	static CString GetTDXMarketFolderName(MarketType eMarket);
+	static CString GetTDXQuoteFolderName(QuoteType eQuote);
+	static CString GetTDXQuoteFileName(QuoteType eQuote);
 };
 

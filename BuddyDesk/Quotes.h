@@ -1,28 +1,7 @@
 #pragma once
+#include "stdafx.h"
 #include <vector>
-
 using namespace std;
-enum QuoteType
-{
-	Undefined = -1,
-	ByTrade,
-	Min1,
-	Min5,
-	Min15,
-	Min30,
-	Min60,
-	Day,
-	Day5,
-	Month,
-	HalfYear,
-	Year,
-};
-
-enum StickType
-{
-	OriginStick = 0,
-	MergedStick = 1,
-};
 
 struct Quote
 {

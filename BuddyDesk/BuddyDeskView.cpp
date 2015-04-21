@@ -176,7 +176,7 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 	COleDateTime dtStart = dtEnd;
 	dtStart -= COleDateTimeSpan(nDays,0,0,0);
 	
-	CQuoteWapper::ParseQuote(_T("600000"), dtStart, dtEnd);
+	CQuoteWapper::ParseQuote(_T("600000"), dtStart, dtEnd, MarketType::Shanghai, QuoteType::Day);
 
 	CStringArray arrQuote;
 

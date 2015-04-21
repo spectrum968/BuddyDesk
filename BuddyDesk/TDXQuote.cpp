@@ -13,30 +13,30 @@ CTDXQuote::~CTDXQuote(void)
 {
 }
 
-CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, char ch, long lNum)
+CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, const MarketType eMarket, const QuoteType eQuote, long lNum)
 {
 	vector<CString> vecQuotes;
 
 	COleDateTime dtEnd;
 	dtEnd = COleDateTime::GetCurrentTime();
-	QuoteParser(strId, dtStart, dtEnd, ch, lNum, vecQuotes);
+	QuoteParser(strId, dtStart, dtEnd, eMarket, eQuote, lNum, vecQuotes);
 	CString strQuote;
 	QuoteAssembler(strId, ch, vecQuotes, strQuote);
 
 	return strQuote;
 }
 
-CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum)
+CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum)
 {
 	vector<CString> vecQuotes;
-	QuoteParser(strId, dtStart, dtEnd, ch, lNum, vecQuotes);
+	QuoteParser(strId, dtStart, dtEnd, eMarket, eQuote, lNum, vecQuotes);
 	CString strQuote;
-	QuoteAssembler(strId, ch, vecQuotes, strQuote);
+	QuoteAssembler(strId, eMarket, eQuote, vecQuotes, strQuote);
 
 	return strQuote;
 }
 
-void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum, vector<CString>& vecQuote)
+void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum, vector<CString>& vecQuote)
 {
 	vector<CString> vecFiles;
 	CString strFolder = CGSetting::GetInstance()->GetString(cst_TDX_PATH);
@@ -45,7 +45,7 @@ void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, c
 	return;
 }
 
-void CTDXQuote::QuoteAssembler(const CString& strId, char ch, const vector<CString>& vecQuote, CString& strQuote)
+void CTDXQuote::QuoteAssembler(const CString& strId, const MarketType eMarket, const QuoteType eQuote, const vector<CString>& vecQuote, CString& strQuote)
 {
 	return;
 }

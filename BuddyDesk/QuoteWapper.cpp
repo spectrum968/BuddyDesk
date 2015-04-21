@@ -6,10 +6,10 @@
 
 using namespace std;
 
-void thread_task(const CString& strCode, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum)
+void thread_task(const CString& strCode, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum)
 {
 	IQuoteLoader* pQuoteLoader = CQuoteLoaderSimpleFactory::CreateQuote(_T("TDX"));
-	CString strXml = pQuoteLoader->GetHistory(strCode, dtStart, dtEnd, ch, lNum);
+	CString strXml = pQuoteLoader->GetHistory(strCode, dtStart, dtEnd, eMarket, eQuote, lNum);
 	delete pQuoteLoader;
 	pQuoteLoader = NULL;
 
@@ -29,9 +29,9 @@ CQuoteWapper::~CQuoteWapper(void)
 {
 }
 
-void CQuoteWapper::ParseQuote(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch, long lNum)
+void CQuoteWapper::ParseQuote(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum)
 {
-	thread t(thread_task, strId, dtStart, dtEnd, ch, lNum);
+	thread t(thread_task, strId, dtStart, dtEnd, eMarket, eQuote, lNum);
 	t.join();
 
 	return;

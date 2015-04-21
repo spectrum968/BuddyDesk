@@ -1,10 +1,11 @@
 #pragma once
+#include "stdafx.h"
 class CQuoteWapper
 {
 public:
 	CQuoteWapper(void);
 	~CQuoteWapper(void);
 public:
-	static void ParseQuote(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, char ch = 'd', long lNum = 90);
+	static void ParseQuote(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);
 };
 

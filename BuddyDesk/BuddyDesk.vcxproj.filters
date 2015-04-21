@@ -69,9 +69,6 @@
     <ClInclude Include="PropertiesWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IQuote.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="DBOperator.h">
       <Filter>数据库操作类</Filter>
     </ClInclude>
@@ -116,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="CommonTool.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="IQuote.h">
+      <Filter>业务逻辑类</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
