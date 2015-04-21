@@ -171,3 +171,7 @@ CString CCommonTool::GetTDXQuoteFileName(QuoteType eQuote)
 
 	return strFile;
 }
+CString CCommonTool::GetCodeFromFileName(const CString& strFile)
+{
+	return _T("");
+}

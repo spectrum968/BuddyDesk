@@ -14,5 +14,6 @@ public:
 	static CString GetTDXMarketFolderName(MarketType eMarket);
 	static CString GetTDXQuoteFolderName(QuoteType eQuote);
 	static CString GetTDXQuoteFileName(QuoteType eQuote);
+	static CString GetCodeFromFileName(const CString& strFile);
 };
 
