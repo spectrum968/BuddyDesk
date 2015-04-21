@@ -30,7 +30,7 @@ CString CYahooQuote::GetHistory(const CString& strId, const COleDateTime& dtStar
 	vector<CString> vecQuotes;
 	QuoteParser(strId, dtStart, dtEnd, eMarket, eQuote, lNum, vecQuotes);
 	CString strQuote;
-	QuoteAssembler(strId, ch, vecQuotes, strQuote);
+	QuoteAssembler(strId, eMarket, eQuote, vecQuotes, strQuote);
 
 	return strQuote;
 }
@@ -73,8 +73,9 @@ void CYahooQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart,
 	return;
 }
 
-void CYahooQuote::QuoteAssembler(const CString& strId, char ch, const vector<CString>& vecQuote, CString& strQuote)
+void CYahooQuote::QuoteAssembler(const CString& strId, const MarketType eMarket, const QuoteType eQuote, const vector<CString>& vecQuote, CString& strQuote)
 {
+	char ch='d';
 	CString strDate, strOpen, strHigh, strLow, strClose;
 	CString strRet(_T("<root>"));
 	strRet.AppendFormat(_T("<sec id=\"%s\" type=\"%s\">"), strId, ch);

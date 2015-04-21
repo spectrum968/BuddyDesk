@@ -15,9 +15,9 @@ CCommonTool::~CCommonTool(void)
 
 bool CCommonTool::GetTDXFiles(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote, vector<CString>& vecFiles)
 {
-	vector<CString> vecFiles = GetTDXDataFileName(strFolder, strId, eMarket, eQuote);
+	vector<CString> vecFilePaths = GetTDXDataFileName(strFolder, strId, eMarket, eQuote);
 
-	for (vector<CString>::iterator itFile=vecFiles.begin(); itFile!=vecFiles.end(); itFile++)
+	for (vector<CString>::iterator itFile=vecFilePaths.begin(); itFile!=vecFilePaths.end(); itFile++)
 	{
 		try
 		{
@@ -55,29 +55,40 @@ vector<CString> CCommonTool::GetTDXDataFileName(const CString& strFolder, const 
 		vecMarket.push_back(MarketType::Shanghai);
 		vecMarket.push_back(MarketType::Shenzhen);
 	}
+	else
+	{
+		vecMarket.push_back(eMarket);
+	}
 	if (eQuote == QuoteType::Undefined)
 	{
 		vecQuote.push_back(QuoteType::Min1);
 		vecQuote.push_back(QuoteType::Min5);
 		vecQuote.push_back(QuoteType::Day);
 	}
+	else
+	{
+		vecQuote.push_back(eQuote);
+	}
 	for (vector<MarketType>::iterator itMarket=vecMarket.begin(); itMarket!=vecMarket.end(); itMarket++)
 	{
 		for (vector<QuoteType>::iterator itQuote = vecQuote.begin(); itQuote!=vecQuote.end(); itQuote++)
 		{
-			CString strMarketFolder, strQuoteFolder, strQuoteFile;
+			CString strMarketFolder, strQuoteFolder, strQuoteFile, strCode;
 			strMarketFolder = GetTDXMarketFolderName(*itMarket);
 			strQuoteFolder = GetTDXQuoteFolderName(*itQuote);
 			strQuoteFile = GetTDXQuoteFileName(*itQuote);
+			strCode = strId.IsEmpty() ? _T("*") : strId;
 			if (strMarketFolder.IsEmpty()||strQuoteFolder.IsEmpty()||strQuoteFile.IsEmpty())
 				continue;
 
-			strFilePath.Format(_T("%s\\%s\\%s\\%s\\*%s"), 
+			strFilePath.Format(_T("%s\\%s\\%s\\%s\\%s%s%s"), 
 				strFolder, 
 				cst_DATA_FOLDER, 
-				GetTDXMarketFolderName(eMarket),
-				GetTDXQuoteFolderName(eQuote),
-				GetTDXQuoteFileName(eQuote));
+				strMarketFolder,
+				strQuoteFolder,
+				strMarketFolder,
+				strCode,
+				strQuoteFile);
 
 			vecFiles.push_back(strFilePath);
 		}

@@ -21,7 +21,7 @@ CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart,
 	dtEnd = COleDateTime::GetCurrentTime();
 	QuoteParser(strId, dtStart, dtEnd, eMarket, eQuote, lNum, vecQuotes);
 	CString strQuote;
-	QuoteAssembler(strId, ch, vecQuotes, strQuote);
+	QuoteAssembler(strId, eMarket, eQuote, vecQuotes, strQuote);
 
 	return strQuote;
 }
@@ -40,7 +40,7 @@ void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, c
 {
 	vector<CString> vecFiles;
 	CString strFolder = CGSetting::GetInstance()->GetString(cst_TDX_PATH);
-	CCommonTool::GetFiles(strFolder, vecFiles);
+	CCommonTool::GetTDXFiles(strFolder, strId, eMarket, eQuote, vecFiles);
 
 	return;
 }
