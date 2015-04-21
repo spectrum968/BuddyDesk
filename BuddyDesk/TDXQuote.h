@@ -1,15 +1,21 @@
 #pragma once
 #include "iquote.h"
 #include <vector>
+#include <map>
 
 using namespace std;
 
-struct TDXQuote
+struct TdxQuote
 {
-	CString m_strId;
-	COleDateTime m_dtTime;
-	
-}
+	int date;
+	int open;
+	int high;
+	int low;
+	int close;
+	int amount;
+	int volumn;
+	int reservation;
+};
 
 class CTDXQuote :
 	public IQuoteLoader
@@ -24,6 +30,6 @@ public:
 private:
 	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum, vector<CString>& vecQuote);
 	void QuoteAssembler(const CString& strId, const MarketType eMarket, const QuoteType eQuote, const vector<CString>& vecQuote, CString& strQuote);
-	void ParseTDXFile(const vector<CString>& vecFiles, CString& strQuote);
+	void ParseTDXFile(const vector<CString>& vecFiles, map<CString, vector<TdxQuote>>& mapQuotes);
 };
 
