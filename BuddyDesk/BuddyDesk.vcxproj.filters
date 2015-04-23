@@ -117,6 +117,9 @@
     <ClInclude Include="CommonTool.h">
       <Filter>工具类</Filter>
     </ClInclude>
+    <ClInclude Include="Quote_DB.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuddyDesk.cpp">
@@ -193,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="CommonTool.cpp">
       <Filter>工具类</Filter>
+    </ClCompile>
+    <ClCompile Include="Quote_DB.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
