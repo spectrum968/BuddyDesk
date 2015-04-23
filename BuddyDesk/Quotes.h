@@ -24,10 +24,11 @@ public:
 public:
 	void Init(const CString& strXml);
 private:
-	QuoteType GetQuoteType(const CString& strType); 
+
+
 private:
 	CString		m_strId;
-	StickType	m_eStick;
+	MarketType	m_eMarket;
 
 	vector<Quote> m_vecQuote;
 };

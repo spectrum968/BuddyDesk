@@ -28,8 +28,8 @@ public:
 	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);
 
 private:
-	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum, map<CString, vector<TdxQuote>>& vecQuote);
-	void QuoteAssembler(const map<CString, vector<TdxQuote>>& mapQuote, CString& strQuote);
+	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum, map<CString, vector<TdxQuote>>& mapQuotes);
+	void QuoteAssembler(const map<CString, vector<TdxQuote>>& mapQuotes, CString& strQuote);
 	void ParseTDXFile(const vector<CString>& vecFiles, map<CString, vector<TdxQuote>>& mapQuotes);
 
 	bool GetTDXFiles(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote, vector<CString>& vecFiles);

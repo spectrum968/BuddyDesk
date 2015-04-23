@@ -77,8 +77,8 @@ void CYahooQuote::QuoteAssembler(const CString& strId, const MarketType eMarket,
 {
 	char ch='d';
 	CString strDate, strOpen, strHigh, strLow, strClose;
-	CString strRet(_T("<root>"));
-	strRet.AppendFormat(_T("<sec id=\"%s\" type=\"%s\">"), strId, ch);
+	CString strRet(_T("<buddy>"));
+	strRet.AppendFormat(_T("<s code=\"%s\" market=\"0\" type=\"-1\">"), strId);
 	bool bHead = true;
 
 	vector<CString>::const_iterator itQuote = vecQuote.begin();
@@ -92,12 +92,12 @@ void CYahooQuote::QuoteAssembler(const CString& strId, const MarketType eMarket,
 
 		vector<CString> vecTemp;
 		CStrUtil::SplitString(*itQuote, vecTemp);
-		strRet.AppendFormat(_T("<quote time=\"%s\" open=\"%s\" high=\"%s\" low=\"%s\" close=\"%s\" />"),
+		strRet.AppendFormat(_T("<q t=\"%s\" o=\"%s\" h=\"%s\" l=\"%s\" c=\"%s\" />"),
 			vecTemp[0], vecTemp[1], vecTemp[2], vecTemp[3], vecTemp[4]);
 		
 	}
 
-	strRet.Append(_T("</sec></root>"));
+	strRet.Append(_T("</s></buddy>"));
 
 	strQuote = strRet;
 

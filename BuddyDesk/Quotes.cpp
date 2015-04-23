@@ -5,7 +5,7 @@
 CQuotes::CQuotes(void)
 {
 	m_strId = _T("");
-	m_eStick = StickType::OriginStick;
+	m_eMarket = MarketType::Unknown;
 }
 
 
@@ -20,26 +20,28 @@ void CQuotes::Init(const CString& strXml)
 		CXmlDocument doc;
 		doc.LoadXml(strXml);
 
-		CXmlNodeList secList = doc.Find(_T("/root/sec"));
+		CXmlNodeList secList = doc.Select(_T("/buddy/s"));
 		for (int i = 0; i < secList.GetLength(); i++)
 		{
 			CXmlNode ndSec = secList.GetItem(i);
-			m_strId = ndSec.GetAttribute(_T("id"));
-			m_eStick = StickType::OriginStick;
+			m_strId = ndSec.GetAttribute(_T("code"));
+			m_eMarket = (MarketType)ndSec.GetAttributeLong(_T("market"));
+			QuoteType eType = (QuoteType)ndSec.GetAttributeLong(_T("type"));
 
-			CXmlNodeList quoteList = ndSec.Find(_T("quote"));
+			CXmlNodeList quoteList = ndSec.Select(_T("q"));
 			for (int j = 0; j < quoteList.GetLength(); j++)
 			{
 				Quote quote;
 				CXmlNode ndQuote = quoteList.GetItem(i);
-				quote.dtTime = ndQuote.GetAttributeDateTime(_T("time"), quote.dtTime);
-				quote.eQuote = GetQuoteType(ndQuote.GetAttribute(_T("type")));
-				quote.dOpen = ndQuote.GetAttributeDouble(_T("open"));
-				quote.dHigh = ndQuote.GetAttributeDouble(_T("high"));
-				quote.dLow = ndQuote.GetAttributeDouble(_T("low"));
-				quote.dClose = ndQuote.GetAttributeDouble(_T("close"));
-				quote.dVolumn = ndQuote.GetAttributeDouble(_T("volumn"));
-				quote.dAmount = ndQuote.GetAttributeDouble(_T("amount"));
+				CString strDate = ndQuote.GetAttribute(_T("t"));
+				quote.dtTime.ParseDateTime((LPCTSTR)strDate.GetBuffer());
+				quote.eQuote = eType;
+				quote.dOpen = ndQuote.GetAttributeDouble(_T("o"));
+				quote.dHigh = ndQuote.GetAttributeDouble(_T("h"));
+				quote.dLow = ndQuote.GetAttributeDouble(_T("l"));
+				quote.dClose = ndQuote.GetAttributeDouble(_T("c"));
+				quote.dVolumn = ndQuote.GetAttributeDouble(_T("v"));
+				quote.dAmount = ndQuote.GetAttributeDouble(_T("a"));
 
 				m_vecQuote.push_back(quote);
 			}
@@ -52,11 +54,4 @@ void CQuotes::Init(const CString& strXml)
 
 	return;
 	
-}
-QuoteType CQuotes::GetQuoteType(const CString& strType)
-{
-	if (strType.CompareNoCase(_T("d")) == 0)
-		return QuoteType::Day;
-
-	return QuoteType::Undefined;
 }

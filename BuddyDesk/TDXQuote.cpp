@@ -82,7 +82,7 @@ void CTDXQuote::QuoteAssembler( const map<CString, vector<TdxQuote>>& mapQuote, 
 		for (vector<TdxQuote>::const_iterator itQuote=cit->second.begin(); 
 			itQuote!=cit->second.end(); itQuote++)
 		{
-			strXml.AppendFormat(_T("<q t=\"%s\" o=\"%10.2d\" h=\"%10.2d\" l=\"%10.2d\" c=\"%10.2d\" v=\"%10.2d\" a=\"%10.2d\" />"),
+			strXml.AppendFormat(_T("<q t=\"%s\" o=\"%.2f\" h=\"%.2f\" l=\"%.2f\" c=\"%.2f\" v=\"%.2f\" a=\"%.2f\" />"),
 				GetDateFromTDXQuote(*itQuote).Format(),
 				GetOpenFromTdxQuote(*itQuote),
 				GetHighFromTdxQuote(*itQuote),
@@ -95,6 +95,8 @@ void CTDXQuote::QuoteAssembler( const map<CString, vector<TdxQuote>>& mapQuote, 
 
 	}
 	strXml.AppendFormat(_T("</buddy>"));
+
+	strQuote = strXml;
 	return;
 }
 bool CTDXQuote::GetTDXFiles(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote, vector<CString>& vecFiles)
@@ -114,7 +116,7 @@ bool CTDXQuote::GetTDXFiles(const CString& strFolder, const CString& strId, cons
 				bFound = (FileFinder.FindNextFile()==TRUE); 
 				CString strFilePath  = FileFinder.GetFilePath();  
 				vecFiles.push_back(strFilePath);
-			}  
+			}
 			FileFinder.Close();
 		}
 		catch( ... )
@@ -301,38 +303,42 @@ QuoteType CTDXQuote::GetQuoteTypeFromTDXFileName(const CString& strFile)
 }
 COleDateTime CTDXQuote::GetDateFromTDXQuote(const TdxQuote& quote)
 {
-	CString strDate;
-	strDate.Format(_T("%d"))
+	CString strTemp;
+	strTemp.Format(_T("%d"), quote.date);
+	int nYear = CStrUtil::ToLong(strTemp.Mid(0,4));
+	int nMonth = CStrUtil::ToLong(strTemp.Mid(4,2));
+	int nDay = CStrUtil::ToLong(strTemp.Mid(6,2));
+	COleDateTime dt(nYear, nMonth, nDay, 0, 0, 0);
 	
 	return dt;
 }
 double CTDXQuote::GetOpenFromTdxQuote(const TdxQuote& quote)
 {
-	double dOpen = double(quote.open/100);
+	double dOpen = ((double)quote.open)/100;
 	return dOpen;
 }
 double CTDXQuote::GetHighFromTdxQuote(const TdxQuote& quote)
 {
-	double dHigh = double(quote.high/100);
+	double dHigh = ((double)quote.open)/100;
 	return dHigh;
 }
 double CTDXQuote::GetLowFromTdxQuote(const TdxQuote& quote)
 {
-	double dLow = double(quote.low/100);
+	double dLow = ((double)quote.open)/100;
 	return dLow;
 }
 double CTDXQuote::GetCloseFromTdxQuote(const TdxQuote& quote)
 {
-	double dClose = double(quote.close/100);
+	double dClose = ((double)quote.open)/100;
 	return dClose;
 }
 double CTDXQuote::GetAmountFromTdxQuote(const TdxQuote& quote)
 {
-	double dAmount = double(quote.amount/100);
+	double dAmount = ((double)quote.open)/100;
 	return dAmount;
 }
 double CTDXQuote::GetVolumnFromTdxQuote(const TdxQuote& quote)
 {
-	double dVolumn = double(quote.volumn/100);
+	double dVolumn = ((double)quote.open)/100;
 	return dVolumn;
 }
