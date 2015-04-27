@@ -10,6 +10,8 @@ class CYahooQuote :
 public:
 	CYahooQuote(void);
 	virtual ~CYahooQuote(void);
+	
+	virtual void Run();
 
 	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);
 	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);

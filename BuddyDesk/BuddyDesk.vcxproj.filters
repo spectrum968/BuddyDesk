@@ -25,6 +25,9 @@
     <Filter Include="全局设置类">
       <UniqueIdentifier>{839e89e9-9e4d-4217-bb0e-4eb319d826cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="线程池">
+      <UniqueIdentifier>{047f0fc8-e37e-4deb-838f-f63956e0f6ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -102,9 +105,6 @@
     <ClInclude Include="Log.h">
       <Filter>工具类</Filter>
     </ClInclude>
-    <ClInclude Include="QuoteDB.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="GSetting.h">
       <Filter>全局设置类</Filter>
     </ClInclude>
@@ -117,7 +117,19 @@
     <ClInclude Include="CommonTool.h">
       <Filter>工具类</Filter>
     </ClInclude>
-    <ClInclude Include="Quote_DB.h">
+    <ClInclude Include="QuoteDB.h">
+      <Filter>数据库操作类</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPoolExecutor.h">
+      <Filter>线程池</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>线程池</Filter>
+    </ClInclude>
+    <ClInclude Include="Runnable.h">
+      <Filter>线程池</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -188,16 +200,22 @@
     <ClCompile Include="Log.cpp">
       <Filter>工具类</Filter>
     </ClCompile>
-    <ClCompile Include="QuoteDB.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="GSetting.cpp">
       <Filter>全局设置类</Filter>
     </ClCompile>
     <ClCompile Include="CommonTool.cpp">
       <Filter>工具类</Filter>
     </ClCompile>
-    <ClCompile Include="Quote_DB.cpp">
+    <ClCompile Include="QuoteDB.cpp">
+      <Filter>数据库操作类</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPoolExecutor.cpp">
+      <Filter>线程池</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>线程池</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

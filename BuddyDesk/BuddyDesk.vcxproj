@@ -43,7 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>F:\Project\BuddyDesk\Debug\Lib\;$(DOENVROOT)\$(Configuration)\Lib;$(DOENVROOT)\$(Configuration)\Bin;$(DOENVROOT_SS)\ShareSoftware\boost\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Projects\BuddyDesk\Debug\Lib\;$(DOENVROOT)\$(Configuration)\Lib;$(DOENVROOT)\$(Configuration)\Bin;$(DOENVROOT_SS)\ShareSoftware\boost\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -124,14 +124,17 @@
     <ClInclude Include="Quotes.h" />
     <ClInclude Include="QuoteSimpleFactory.h" />
     <ClInclude Include="QuoteWapper.h" />
-    <ClInclude Include="Quote_DB.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Runnable.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TDXQuote.h" />
+    <ClInclude Include="Thread.h" />
+    <ClInclude Include="ThreadPoolExecutor.h" />
     <ClInclude Include="Util_String.h" />
     <ClInclude Include="Util_XMLDOM.h" />
     <ClInclude Include="ViewTree.h" />
+    <ClInclude Include="Worker.h" />
     <ClInclude Include="YahooQuote.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,15 +157,17 @@
     <ClCompile Include="Quotes.cpp" />
     <ClCompile Include="QuoteSimpleFactory.cpp" />
     <ClCompile Include="QuoteWapper.cpp" />
-    <ClCompile Include="Quote_DB.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TDXQuote.cpp" />
+    <ClCompile Include="Thread.cpp" />
+    <ClCompile Include="ThreadPoolExecutor.cpp" />
     <ClCompile Include="Util_String.cpp" />
     <ClCompile Include="Util_XMLDOM.cpp" />
     <ClCompile Include="ViewTree.cpp" />
+    <ClCompile Include="Worker.cpp" />
     <ClCompile Include="YahooQuote.cpp" />
   </ItemGroup>
   <ItemGroup>
