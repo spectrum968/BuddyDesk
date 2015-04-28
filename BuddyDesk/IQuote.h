@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "Runnable.h"
 
-interface IQuoteLoader : IRunnable
+interface IQuoteLoader
 {
 public:
 	virtual ~IQuoteLoader(void) {};

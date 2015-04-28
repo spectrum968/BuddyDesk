@@ -2,6 +2,7 @@
 #include "iquote.h"
 #include <vector>
 #include <map>
+#include "QuoteDB.h"
 
 using namespace std;
 
@@ -24,9 +25,11 @@ public:
 	CTDXQuote(void);
 	virtual ~CTDXQuote(void);
 
+	bool Init();
+	void Destroy();
+
 	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);
 	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);
-
 private:
 	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum, map<CString, vector<TdxQuote>>& mapQuotes);
 	void QuoteAssembler(const map<CString, vector<TdxQuote>>& mapQuotes, CString& strQuote);
@@ -47,5 +50,8 @@ private:
 	double GetCloseFromTdxQuote(const TdxQuote& quote);
 	double GetAmountFromTdxQuote(const TdxQuote& quote);
 	double GetVolumnFromTdxQuote(const TdxQuote& quote);
+
+private:
+	CQuoteDB* m_pQuoteDB;
 };
 

@@ -13,5 +13,6 @@ public:
 public:
 	bool WriteQuote(CQuotes quote);
 	CQuotes GetQuote(const CString& strId, QuoteType eType=QuoteType::Day, StickType eStick=StickType::OriginStick);
+	CString GetLastQuoteTime(const CString strId, QuoteType eType=QuoteType::Day);
 };
 

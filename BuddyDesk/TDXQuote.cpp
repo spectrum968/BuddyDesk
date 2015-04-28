@@ -6,11 +6,35 @@
 
 CTDXQuote::CTDXQuote(void)
 {
+	m_pQuoteDB = NULL;
 }
 
 
 CTDXQuote::~CTDXQuote(void)
 {
+}
+
+bool CTDXQuote::Init()
+{
+	if (m_pQuoteDB)
+		m_pQuoteDB = new CQuoteDB();
+
+	return m_pQuoteDB->Initial(CGSetting::GetInstance()->GetString(cst_SQL_SERVER),
+		CGSetting::GetInstance()->GetString(cst_SQL_DB));
+}
+
+void CTDXQuote::Destroy()
+{
+	if (m_pQuoteDB)
+	{
+		if (m_pQuoteDB->IsConnected())
+		{
+			m_pQuoteDB->DisConnect();
+		}
+
+		delete m_pQuoteDB;
+		m_pQuoteDB = NULL;
+	}
 }
 
 CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, const MarketType eMarket, const QuoteType eQuote, long lNum)
