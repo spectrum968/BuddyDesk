@@ -29,14 +29,9 @@ struct ParserParam
 void thread_task(const ParserParam& param)
 {
 	IQuoteLoader* pQuoteLoader = CQuoteLoaderSimpleFactory::CreateQuote(_T("TDX"));
-	CString strXml = pQuoteLoader->GetHistory(param.m_strCode, param.m_dtStart, param.m_dtEnd, param.m_eMarket, param.m_eQuote, param.m_lNum);
+	pQuoteLoader->UpdateHistory(param.m_strCode);
 	delete pQuoteLoader;
 	pQuoteLoader = NULL;
-
-	CQuotes quote;
-	quote.Init(strXml);
-
-
 }
 
 

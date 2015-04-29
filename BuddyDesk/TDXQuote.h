@@ -30,10 +30,12 @@ public:
 
 	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);
 	CString GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum = 90);
+	void	UpdateHistory(const CString& strId);
 private:
-	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum, map<CString, vector<TdxQuote>>& mapQuotes);
+	void QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, map<CString, vector<TdxQuote>>& mapQuotes, const MarketType eMarket=MarketType::Unknown, const QuoteType eQuote=QuoteType::Day, long lNum=90);
 	void QuoteAssembler(const map<CString, vector<TdxQuote>>& mapQuotes, CString& strQuote);
 	void ParseTDXFile(const vector<CString>& vecFiles, map<CString, vector<TdxQuote>>& mapQuotes);
+	bool UpdateQuotes(const map<CString, vector<TdxQuote>>& mapQuotes);
 
 	bool GetTDXFiles(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote, vector<CString>& vecFiles);
 	vector<CString> GetTDXDataFileName(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote);
@@ -50,6 +52,7 @@ private:
 	double GetCloseFromTdxQuote(const TdxQuote& quote);
 	double GetAmountFromTdxQuote(const TdxQuote& quote);
 	double GetVolumnFromTdxQuote(const TdxQuote& quote);
+	CString GetTDXQuoteTableName(const CString& strId, MarketType eMarket);
 
 private:
 	CQuoteDB* m_pQuoteDB;

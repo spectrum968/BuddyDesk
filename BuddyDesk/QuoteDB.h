@@ -13,6 +13,8 @@ public:
 public:
 	bool WriteQuote(CQuotes quote);
 	CQuotes GetQuote(const CString& strId, QuoteType eType=QuoteType::Day, StickType eStick=StickType::OriginStick);
-	CString GetLastQuoteTime(const CString strId, QuoteType eType=QuoteType::Day);
+	COleDateTime GetLastQuoteTime(const CString strTblName, QuoteType eType=QuoteType::Day);
+	bool CreateTable(const CString& strTableName);
+	bool IsTableExist(const CString& strTableName);
 };
 

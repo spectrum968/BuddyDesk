@@ -51,14 +51,19 @@ CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart,
 CString CTDXQuote::GetHistory(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum)
 {
 	map<CString, vector<TdxQuote>> mapQuotes;
-	QuoteParser(strId, dtStart, dtEnd, eMarket, eQuote, lNum, mapQuotes);
+	QuoteParser(strId, dtStart, dtEnd, mapQuotes, eMarket, eQuote, lNum);
 	CString strQuote;
 	QuoteAssembler(mapQuotes, strQuote);
 
 	return strQuote;
 }
-
-void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, const MarketType eMarket, const QuoteType eQuote, long lNum, map<CString, vector<TdxQuote>>& mapQuotes)
+void CTDXQuote::UpdateHistory(const CString& strId)
+{
+	map<CString, vector<TdxQuote>> mapQuotes;
+	COleDateTime dtStart, dtEnd;
+	QuoteParser(strId, dtStart, dtEnd, mapQuotes);
+}
+void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, map<CString, vector<TdxQuote>>& mapQuotes, const MarketType eMarket, const QuoteType eQuote, long lNum)
 {
 	vector<CString> vecFiles;
 	CString strFolder = CGSetting::GetInstance()->GetString(cst_TDX_PATH);
@@ -122,6 +127,38 @@ void CTDXQuote::QuoteAssembler( const map<CString, vector<TdxQuote>>& mapQuote, 
 
 	strQuote = strXml;
 	return;
+}
+bool CTDXQuote::UpdateQuotes(const map<CString, vector<TdxQuote>>& mapQuotes)
+{
+	bool bResult(false);
+	map<CString, vector<TdxQuote>>::const_iterator citTdxQuotes = mapQuotes.begin();
+	for ( ; citTdxQuotes!=mapQuotes.end(); citTdxQuotes++)
+	{
+		CString strFilePath = citTdxQuotes->first;
+		CString strCode = GetCodeFromTDXFileName(strFilePath);
+		MarketType eMarket = GetMarketTypeFromTDXFileName(strFilePath);
+		QuoteType eQuote = GetQuoteTypeFromTDXFileName(strFilePath);
+		COleDateTime dtLastTime = m_pQuoteDB->GetLastQuoteTime(GetTDXQuoteTableName(strCode, eMarket), eQuote);
+		if( dtLastTime.GetStatus() == COleDateTime::invalid )
+		{
+			OutputDebugString(_T("Failed to get last quote time while updating quotes."));
+			break;
+		}
+		
+
+		vector<TdxQuote>::const_iterator citQuotes = citTdxQuotes->second.begin();
+		for ( ; citQuotes!= citTdxQuotes->second.end(); citQuotes++)
+		{
+			COleDateTime dtQuoteTime = GetDateFromTDXQuote(*citQuotes);
+			if (dtQuoteTime < dtLastTime)
+				continue;
+
+		}
+
+		bResult = true;
+	}
+
+	return bResult;
 }
 bool CTDXQuote::GetTDXFiles(const CString& strFolder, const CString& strId, const MarketType eMarket, const QuoteType eQuote, vector<CString>& vecFiles)
 {
@@ -365,4 +402,23 @@ double CTDXQuote::GetVolumnFromTdxQuote(const TdxQuote& quote)
 {
 	double dVolumn = ((double)quote.open)/100;
 	return dVolumn;
+}
+CString CTDXQuote::GetTDXQuoteTableName(const CString& strId, MarketType eMarket)
+{
+	CString strTblName(_T(""));
+	switch (eMarket)
+	{
+	case Unknown:
+		break;
+	case Shanghai:
+		strTblName.Format(_T("SH%s"), strId);
+		break;
+	case Shenzhen:
+		strTblName.Format(_T("SZ%s"), strId);
+		break;
+	default:
+		break;
+	}
+
+	return strTblName;
 }

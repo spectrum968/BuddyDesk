@@ -22,6 +22,12 @@ public:
 	int GetReconnNum() {return m_nReconnNum;}
 	CString GetCollectString(const variant_t index) {return (_bstr_t)GetRecordSet()->GetCollect(index);}
 	long GetCollectLong(const variant_t index) {return (long)GetRecordSet()->GetCollect(index);}
+	COleDateTime GetCollectDateTime(const variant_t index) 
+	{
+		variant_t vDateTime = GetRecordSet()->GetCollect(index);
+		::VariantChangeType(&vDateTime,&vDateTime,0,VT_DATE);
+		return vDateTime.date;
+	}
 
 	virtual bool ExecuteSQL(const CString& strSQL);
 	virtual bool ExecuteNoneQuery(const vector<CString>& vecSQL);
