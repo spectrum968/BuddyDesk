@@ -43,7 +43,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\Projects\BuddyDesk\Debug\Lib\;$(DOENVROOT)\$(Configuration)\Lib;$(DOENVROOT)\$(Configuration)\Bin;$(DOENVROOT_SS)\ShareSoftware\boost\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Projects\BuddyDesk\Debug\Lib\;$(WindowsSDK_LibraryPath_x86);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib</LibraryPath>
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);c:\Projects\Xtreme ToolkitPro v15.0.1\Source\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
