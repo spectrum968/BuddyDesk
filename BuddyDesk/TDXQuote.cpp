@@ -145,7 +145,7 @@ bool CTDXQuote::UpdateQuotes(const map<CString, vector<TdxQuote>>& mapQuotes)
 			break;
 		}
 		
-
+		CQuotes quotes;
 		vector<TdxQuote>::const_iterator citQuotes = citTdxQuotes->second.begin();
 		for ( ; citQuotes!= citTdxQuotes->second.end(); citQuotes++)
 		{
@@ -153,9 +153,20 @@ bool CTDXQuote::UpdateQuotes(const map<CString, vector<TdxQuote>>& mapQuotes)
 			if (dtQuoteTime < dtLastTime)
 				continue;
 
+			Quote quote;
+			quote.dtTime = dtQuoteTime;
+			quote.eQuote = eQuote;
+			quote.dOpen = GetOpenFromTdxQuote(*citQuotes);
+			quote.dHigh = GetHighFromTdxQuote(*citQuotes);
+			quote.dLow = GetLowFromTdxQuote(*citQuotes);
+			quote.dClose = GetCloseFromTdxQuote(*citQuotes);
+			quote.dVolumn = GetVolumnFromTdxQuote(*citQuotes);
+			quote.dAmount = GetAmountFromTdxQuote(*citQuotes);
+
+			quotes.put(quote);
 		}
 
-		bResult = true;
+		bResult = m_pQuoteDB->WriteQuote(GetTDXQuoteTableName(strCode, eMarket), quotes);
 	}
 
 	return bResult;

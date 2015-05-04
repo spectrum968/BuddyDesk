@@ -91,3 +91,27 @@ COleDateTime CQuoteDB::GetLastQuoteTime(const CString strTblName, QuoteType eTyp
 
 	return dtTime;
 }
+bool CQuoteDB::WriteQuote(const CString& strTableName, const CQuotes& quote)
+{
+	bool bRet(false);
+	if (!IsTableExist(strTableName))
+		bRet = CreateTable(strTableName);
+
+	if (bRet)
+	{
+		vector<CString> vecSQL;
+		vector<Quote>::const_iterator itQuote = quote.GetQuote().begin();
+		for ( ; itQuote!=quote.GetQuote().end(); itQuote++)
+		{
+			CString strSQL;
+			strSQL.Format(_T("INSERT INTO %s (SecurityCode, DataType, [DateTime], [Open], High, Low, [Close], \
+							 Amount, Volumn) VALUES (%s, %d, '%s', %f, %f, %f, %f, %f, %d)"), quote.GetId(),
+							 itQuote->eQuote, itQuote->dtTime.Format(), itQuote->dOpen, itQuote->dHigh,
+							 itQuote->dLow, itQuote->dClose, itQuote->dAmount, itQuote->dVolumn);
+			vecSQL.push_back(strSQL);
+		}
+		bRet = ExecuteNoneQuery(vecSQL);
+	}
+
+	return bRet;
+}

@@ -23,6 +23,11 @@ public:
 
 public:
 	void Init(const CString& strXml);
+	void put(Quote& quote) {m_vecQuote.push_back(quote);}
+	CString GetId() const {return m_strId;}
+	MarketType GetMarket() const {return m_eMarket;}
+	vector<Quote> GetQuote() const {return m_vecQuote;}
+	//CString GetInfo();
 private:
 
 
