@@ -25,7 +25,9 @@ public:
 	void Init(const CString& strXml);
 	void put(Quote& quote) {m_vecQuote.push_back(quote);}
 	CString GetId() const {return m_strId;}
+	void SetId(const CString& strId) {m_strId = strId;}
 	MarketType GetMarket() const {return m_eMarket;}
+	void SetMarket(const MarketType eMarket) {m_eMarket = eMarket;} 
 	vector<Quote> GetQuote() const {return m_vecQuote;}
 	//CString GetInfo();
 private:

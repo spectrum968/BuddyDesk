@@ -16,7 +16,7 @@ CTDXQuote::~CTDXQuote(void)
 
 bool CTDXQuote::Init()
 {
-	if (m_pQuoteDB)
+	if (m_pQuoteDB == NULL)
 		m_pQuoteDB = new CQuoteDB();
 
 	return m_pQuoteDB->Initial(CGSetting::GetInstance()->GetString(cst_SQL_SERVER),
@@ -62,6 +62,7 @@ void CTDXQuote::UpdateHistory(const CString& strId)
 	map<CString, vector<TdxQuote>> mapQuotes;
 	COleDateTime dtStart, dtEnd;
 	QuoteParser(strId, dtStart, dtEnd, mapQuotes);
+	UpdateQuotes(mapQuotes);
 }
 void CTDXQuote::QuoteParser(const CString& strId, const COleDateTime& dtStart, const COleDateTime& dtEnd, map<CString, vector<TdxQuote>>& mapQuotes, const MarketType eMarket, const QuoteType eQuote, long lNum)
 {
@@ -92,6 +93,8 @@ void CTDXQuote::ParseTDXFile(const vector<CString>& vecFiles, map<CString, vecto
 			fin.read(reinterpret_cast<char*>(&tdxQuote), sizeof(TdxQuote));
 			vecQuotes.push_back(tdxQuote);
 		}
+		fin.close();
+
 		mapQuotes.insert(make_pair(strFile, vecQuotes));
 	}
 	return;
@@ -146,11 +149,13 @@ bool CTDXQuote::UpdateQuotes(const map<CString, vector<TdxQuote>>& mapQuotes)
 		}
 		
 		CQuotes quotes;
+		quotes.SetId(strCode);
+		quotes.SetMarket(eMarket);
 		vector<TdxQuote>::const_iterator citQuotes = citTdxQuotes->second.begin();
 		for ( ; citQuotes!= citTdxQuotes->second.end(); citQuotes++)
 		{
 			COleDateTime dtQuoteTime = GetDateFromTDXQuote(*citQuotes);
-			if (dtQuoteTime < dtLastTime)
+			if (dtQuoteTime <= dtLastTime)
 				continue;
 
 			Quote quote;
@@ -220,7 +225,7 @@ vector<CString> CTDXQuote::GetTDXDataFileName(const CString& strFolder, const CS
 	if (eQuote == QuoteType::Undefined)
 	{
 		vecQuote.push_back(QuoteType::Min1);
-		vecQuote.push_back(QuoteType::Min5);
+		vecQuote.push_back(QuoteType::Min15);
 		vecQuote.push_back(QuoteType::Day);
 	}
 	else
@@ -391,27 +396,27 @@ double CTDXQuote::GetOpenFromTdxQuote(const TdxQuote& quote)
 }
 double CTDXQuote::GetHighFromTdxQuote(const TdxQuote& quote)
 {
-	double dHigh = ((double)quote.open)/100;
+	double dHigh = ((double)quote.high)/100;
 	return dHigh;
 }
 double CTDXQuote::GetLowFromTdxQuote(const TdxQuote& quote)
 {
-	double dLow = ((double)quote.open)/100;
+	double dLow = ((double)quote.low)/100;
 	return dLow;
 }
 double CTDXQuote::GetCloseFromTdxQuote(const TdxQuote& quote)
 {
-	double dClose = ((double)quote.open)/100;
+	double dClose = ((double)quote.close)/100;
 	return dClose;
 }
 double CTDXQuote::GetAmountFromTdxQuote(const TdxQuote& quote)
 {
-	double dAmount = ((double)quote.open)/100;
+	double dAmount = ((double)quote.amount)/100;
 	return dAmount;
 }
 double CTDXQuote::GetVolumnFromTdxQuote(const TdxQuote& quote)
 {
-	double dVolumn = ((double)quote.open)/100;
+	double dVolumn = ((double)quote.volumn)/100;
 	return dVolumn;
 }
 CString CTDXQuote::GetTDXQuoteTableName(const CString& strId, MarketType eMarket)

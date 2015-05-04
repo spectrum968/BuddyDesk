@@ -69,8 +69,8 @@ COleDateTime CQuoteDB::GetLastQuoteTime(const CString strTblName, QuoteType eTyp
 {
 	CString strSQL;
 	strSQL.Format(_T("SELECT [DateTime] FROM [%s].dbo.[%s] with(nolock) \
-					 WHERE DateTime in (SELECT MAX([DateTime] with(nolock) \
-					 FROM  [%s].dbo.[%s]))"), GetDB(), strTblName);
+					 WHERE DateTime in (SELECT MAX([DateTime]) \
+					 FROM  [%s].dbo.[%s])"), GetDB(), strTblName, GetDB(), strTblName);
 
 	COleDateTime dtTime;
 	if(!ExecuteSQL(strSQL))
@@ -93,20 +93,27 @@ COleDateTime CQuoteDB::GetLastQuoteTime(const CString strTblName, QuoteType eTyp
 }
 bool CQuoteDB::WriteQuote(const CString& strTableName, const CQuotes& quote)
 {
-	bool bRet(false);
+	bool bRet(false), bTableExist(false);
 	if (!IsTableExist(strTableName))
 		bRet = CreateTable(strTableName);
+	else
+		bTableExist = true;
 
-	if (bRet)
+	if (bRet||bTableExist)
 	{
 		vector<CString> vecSQL;
-		vector<Quote>::const_iterator itQuote = quote.GetQuote().begin();
-		for ( ; itQuote!=quote.GetQuote().end(); itQuote++)
+		CString strAlertSQL;
+		strAlertSQL.Format(_T("UPDATE [%s].dbo.[%s] SET [DataType]=6"), GetDB(), strTableName);
+		vecSQL.push_back(strAlertSQL);
+
+		const vector<Quote> vecQuote = quote.GetQuote();
+		vector<Quote>::const_iterator itQuote = vecQuote.begin();
+		for ( ; itQuote!=vecQuote.end(); itQuote++)
 		{
 			CString strSQL;
-			strSQL.Format(_T("INSERT INTO %s (SecurityCode, DataType, [DateTime], [Open], High, Low, [Close], \
-							 Amount, Volumn) VALUES (%s, %d, '%s', %f, %f, %f, %f, %f, %d)"), quote.GetId(),
-							 itQuote->eQuote, itQuote->dtTime.Format(), itQuote->dOpen, itQuote->dHigh,
+			strSQL.Format(_T("INSERT INTO [%s].dbo.[%s] (SecurityCode, DataType, [DateTime], [Open], High, Low, [Close], \
+							 Amount, Volumn) VALUES (%s, %d, '%s', %f, %f, %f, %f, %f, %f)"), GetDB(), strTableName,
+							 quote.GetId(), itQuote->eQuote, itQuote->dtTime.Format(), itQuote->dOpen, itQuote->dHigh,
 							 itQuote->dLow, itQuote->dClose, itQuote->dAmount, itQuote->dVolumn);
 			vecSQL.push_back(strSQL);
 		}

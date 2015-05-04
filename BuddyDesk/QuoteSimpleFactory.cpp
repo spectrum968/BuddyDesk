@@ -19,7 +19,9 @@ IQuoteLoader* CQuoteLoaderSimpleFactory::CreateQuote(const CString& strSource)
 	}
 	else if(strSource.CompareNoCase(_T("Tdx")) == 0)
 	{
-		return new CTDXQuote();
+		CTDXQuote* pQuoteLoader = new CTDXQuote();
+		pQuoteLoader->Init();
+		return pQuoteLoader;
 	}
 
 	return NULL;
