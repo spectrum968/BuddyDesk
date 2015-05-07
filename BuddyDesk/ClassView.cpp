@@ -123,11 +123,12 @@ void CClassView::OnSize(UINT nType, int cx, int cy)
 
 void CClassView::FillClassView()
 {
-	HTREEITEM hRoot = m_wndClassView.InsertItem(_T("FakeApp Àà"), 0, 0);
+	CDocument* pCurrentDoc = theApp.GetMainWnd()->;
+	HTREEITEM hRoot = m_wndClassView.InsertItem(_T("Stocks"), 0, 0);
 	m_wndClassView.SetItemState(hRoot, TVIS_BOLD, TVIS_BOLD);
 
-	HTREEITEM hClass = m_wndClassView.InsertItem(_T("CFakeAboutDlg"), 1, 1, hRoot);
-	m_wndClassView.InsertItem(_T("CFakeAboutDlg()"), 3, 3, hClass);
+	HTREEITEM hClass = m_wndClassView.InsertItem(_T("Quotes"), 1, 1, hRoot);
+	m_wndClassView.InsertItem(_T("Quote"), 3, 3, hClass);
 
 	m_wndClassView.Expand(hRoot, TVE_EXPAND);
 

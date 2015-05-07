@@ -151,13 +151,18 @@ bool CTDXQuote::UpdateQuotes(const map<CString, vector<TdxQuote>>& mapQuotes)
 		CQuotes quotes;
 		quotes.SetId(strCode);
 		quotes.SetMarket(eMarket);
+		COleDateTimeSpan dtSpan(1, 0, 0, 0);
+		COleDateTime dtPreTime;
 		vector<TdxQuote>::const_iterator citQuotes = citTdxQuotes->second.begin();
 		for ( ; citQuotes!= citTdxQuotes->second.end(); citQuotes++)
 		{
 			COleDateTime dtQuoteTime = GetDateFromTDXQuote(*citQuotes);
-			if (dtQuoteTime <= dtLastTime)
+			if (dtQuoteTime - dtLastTime < dtSpan)
+				continue;
+			if (dtPreTime.GetStatus() == COleDateTime::valid && dtQuoteTime - dtPreTime <= dtSpan)
 				continue;
 
+			dtPreTime = dtQuoteTime;
 			Quote quote;
 			quote.dtTime = dtQuoteTime;
 			quote.eQuote = eQuote;

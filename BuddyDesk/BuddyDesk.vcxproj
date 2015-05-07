@@ -132,6 +132,7 @@
     <ClInclude Include="TDXQuote.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadPoolExecutor.h" />
+    <ClInclude Include="UserDefinedMessage.h" />
     <ClInclude Include="Util_String.h" />
     <ClInclude Include="Util_XMLDOM.h" />
     <ClInclude Include="ViewTree.h" />

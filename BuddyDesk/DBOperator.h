@@ -13,11 +13,12 @@ class CDBOperator :
 public:
 	CDBOperator();
 	~CDBOperator(void);
-
 public:
 	bool Initial(const CString& strConnectString);
 	bool Initial(const CString& strServer, const CString& strDB);
 	bool IsConnected() {return m_bConnected;}
+
+protected:
 	CString GetConnString(const CString& strServer, const CString& strDB);
 	int GetReconnNum() {return m_nReconnNum;}
 	CString GetCollectString(const variant_t index) {return (_bstr_t)GetRecordSet()->GetCollect(index);}

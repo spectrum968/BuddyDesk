@@ -122,3 +122,35 @@ bool CQuoteDB::WriteQuote(const CString& strTableName, const CQuotes& quote)
 
 	return bRet;
 }
+bool CQuoteDB::GetSecurityList(map<int, CString>& mapQuotes)
+{
+	bool bRet(false);
+	CString strSQL;
+	strSQL.Format(_T("SELECT [SecurityName], [SecurityCode] FROM [%s].dbo.SecurityData with(nolock)"),
+		GetDB());
+
+	if(!ExecuteSQL(strSQL))
+	{
+		CString strLog;
+		strLog.Format(_T("Get last quote time failed, SQL: %s"), strSQL);
+		CLog::Log(_T("Get last quote time failed."), strLog);
+
+		return bRet;
+	}
+
+	if (GetRecordSet()->GetRecordCount())
+	{
+		GetRecordSet()->MoveFirst();
+		do{
+			CString strName = GetCollectString(_T("SecurityName"));
+			int nCode = GetCollectLong(_T("SecurityCode"));
+			mapQuotes.insert(make_pair(nCode, strName));
+
+			GetRecordSet()->MoveNext();
+		}while(!GetRecordSet()->adoEOF);
+
+		bRet = true;
+	}
+
+	return bRet;
+}

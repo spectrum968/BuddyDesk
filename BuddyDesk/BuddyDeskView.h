@@ -50,6 +50,7 @@ protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnParseQuoteFinished();
 	DECLARE_MESSAGE_MAP()
 
 private:

@@ -15,6 +15,8 @@
 #include "QuoteWapper.h"
 #include "Util_String.h"
 
+#include "ClassView.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -34,6 +36,7 @@ BEGIN_MESSAGE_MAP(CBuddyDeskView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CBuddyDeskView::OnFilePrintPreview)
+	ON_COMMAND(WM_PARSE_QUOTE_FINISHED, &OnParseQuoteFinished)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 END_MESSAGE_MAP()
@@ -62,25 +65,10 @@ int CBuddyDeskView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
-	ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
-
-	m_wndChartControl.GetContent()->GetAppearance()->LoadAppearance(_T("CHART_APPEARANCE_GRAY"));
-
-	// set chart title.
-	CXTPChartTitleCollection* pTitles = m_wndChartControl.GetContent()->GetTitles();
-	CXTPChartTitle* pTitle = pTitles->Add(new CXTPChartTitle());
-	pTitle->SetText(_T("历史价格"));
-
-	// set chart subtitle.
-	CXTPChartTitle* pSubTitle = pTitles->Add(new CXTPChartTitle());
-	pSubTitle->SetText(_T("桌面分析"));
-	pSubTitle->SetDocking(xtpChartDockBottom);
-	pSubTitle->SetAlignment(xtpChartAlignFar);
-	pSubTitle->SetFont(CXTPChartFont::GetTahoma8());
-	pSubTitle->SetTextColor(CXTPChartColor::Gray);
-
-	// turn off legend.
-	m_wndChartControl.GetContent()->GetLegend()->SetVisible(FALSE);
+	// TODO:  在此添加您专用的创建代码
+    CCreateContext context;
+    context.m_pNewViewClass = RUNTIME_CLASS(CClassView);
+    context.m_pCurrentDoc = GetDocument();
 
 	return 0;
 }
@@ -166,6 +154,26 @@ void CBuddyDeskView::AddData(CXTPChartSeries* pSeries, LPCTSTR arg, double dLow,
 }
 void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, int nDays)
 {
+	ModifyStyleEx(WS_EX_CLIENTEDGE, 0);
+
+	m_wndChartControl.GetContent()->GetAppearance()->LoadAppearance(_T("CHART_APPEARANCE_GRAY"));
+
+	// set chart title.
+	CXTPChartTitleCollection* pTitles = m_wndChartControl.GetContent()->GetTitles();
+	CXTPChartTitle* pTitle = pTitles->Add(new CXTPChartTitle());
+	pTitle->SetText(_T(""));
+
+	// set chart subtitle.
+	CXTPChartTitle* pSubTitle = pTitles->Add(new CXTPChartTitle());
+	pSubTitle->SetText(_T(""));
+	pSubTitle->SetDocking(xtpChartDockBottom);
+	pSubTitle->SetAlignment(xtpChartAlignFar);
+	pSubTitle->SetFont(CXTPChartFont::GetTahoma8());
+	pSubTitle->SetTextColor(CXTPChartColor::Gray);
+
+	// turn off legend.
+	m_wndChartControl.GetContent()->GetLegend()->SetVisible(FALSE);
+
 	m_wndChartControl.GetContent()->GetSeries()->RemoveAll();
 
 	CXTPChartSeries* pSeries = m_wndChartControl.GetContent()->GetSeries()->Add(new CXTPChartSeries());
@@ -176,7 +184,8 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 	COleDateTime dtStart = dtEnd;
 	dtStart -= COleDateTimeSpan(nDays,0,0,0);
 	
-	CQuoteWapper::ParseQuote(_T("600000"), dtStart, dtEnd, MarketType::Shanghai, QuoteType::Day);
+	HWND hWnd = GetSafeHwnd();
+	CQuoteWapper::ParseQuote(hWnd, _T("600000"), dtStart, dtEnd, MarketType::Shanghai, QuoteType::Day);
 
 	CStringArray arrQuote;
 
@@ -238,12 +247,22 @@ void CBuddyDeskView::UpdateHistory(const CString& strCode, bool bCandleStick, in
 
 void CBuddyDeskView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 {
-	UpdateHistory(_T("MSFT"), true);
+	//UpdateHistory(_T("MSFT"), true);
+	//GetDocument()->UpdateAllViews(NULL);
+	//if (GetDocument()!=NULL)
+	//{
+	//	GetDocument()->UpdateAllViews(NULL);
+	//}
 }
 
 void CBuddyDeskView::OnPrint(CDC* pDC, CPrintInfo* pInfo)
 {
 	m_wndChartControl.PrintToDC(pDC->m_hDC, pInfo->m_rectDraw);
+}
+
+void CBuddyDeskView::OnParseQuoteFinished()
+{
+	AfxMessageBox(_T("文件解析完成"));
 }
 
 // CBuddyDeskView 诊断

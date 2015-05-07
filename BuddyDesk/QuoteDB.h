@@ -16,5 +16,6 @@ public:
 	COleDateTime GetLastQuoteTime(const CString strTblName, QuoteType eType=QuoteType::Day);
 	bool CreateTable(const CString& strTableName);
 	bool IsTableExist(const CString& strTableName);
+	bool GetSecurityList(map<int, CString>& mapQuotes);
 };
 

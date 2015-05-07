@@ -13,6 +13,8 @@
 
 #include <propkey.h>
 
+#include "GSetting.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -30,11 +32,19 @@ END_MESSAGE_MAP()
 CBuddyDeskDoc::CBuddyDeskDoc()
 {
 	// TODO: 在此添加一次性构造代码
-
+	m_pQuoteDB = NULL;
 }
 
 CBuddyDeskDoc::~CBuddyDeskDoc()
 {
+	if (m_pQuoteDB != NULL)
+	{
+		if (m_pQuoteDB->IsConnected())
+			m_pQuoteDB->DisConnect();
+		
+		delete m_pQuoteDB;
+		m_pQuoteDB;
+	}
 }
 
 BOOL CBuddyDeskDoc::OnNewDocument()
@@ -44,6 +54,14 @@ BOOL CBuddyDeskDoc::OnNewDocument()
 
 	// TODO: 在此添加重新初始化代码
 	// (SDI 文档将重用该文档)
+
+	if(m_pQuoteDB == NULL)
+	{
+		CString strServer = CGSetting::GetInstance()->GetString(cst_SQL_SERVER);
+		CString strDB = CGSetting::GetInstance()->GetString(cst_SQL_DB);
+		m_pQuoteDB = new CQuoteDB();
+		m_pQuoteDB->Initial(strServer, strDB);
+	}
 
 	return TRUE;
 }
@@ -63,6 +81,14 @@ void CBuddyDeskDoc::Serialize(CArchive& ar)
 	{
 		// TODO: 在此添加加载代码
 	}
+}
+
+bool CBuddyDeskDoc::GetAllQuotes(map<int, CString>& mapQuotes)
+{
+	bool bRet(false);
+	bRet = m_pQuoteDB->GetSecurityList(mapQuotes);
+
+	return bRet;
 }
 
 #ifdef SHARED_HANDLERS

@@ -60,6 +60,7 @@
 #include "Log.h"
 #include "Util_String.h"
 #include "Util_XMLDOM.h"
+#include "UserDefinedMessage.h"
 
 using namespace Buddy::Util;
 

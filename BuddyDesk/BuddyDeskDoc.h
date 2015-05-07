@@ -4,7 +4,9 @@
 
 
 #pragma once
-
+#include "QuoteDB.h"
+#include <map>
+using namespace std;
 
 class CBuddyDeskDoc : public CDocument
 {
@@ -41,8 +43,14 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 
+public:
+	bool GetAllQuotes(map<int, CString>& mapQuotes);
+
 #ifdef SHARED_HANDLERS
 	// 用于为搜索处理程序设置搜索内容的 Helper 函数
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+
+private:
+	CQuoteDB* m_pQuoteDB;
 };
