@@ -1,8 +1,9 @@
 
 #include "stdafx.h"
 #include "MainFrm.h"
-#include "ClassView.h"
+#include "SidePane.h"
 #include "Resource.h"
+#include "BuddyDeskDoc.h"
 #include "BuddyDesk.h"
 
 class CClassViewMenuButton : public CMFCToolBarMenuButton
@@ -36,16 +37,23 @@ IMPLEMENT_SERIAL(CClassViewMenuButton, CMFCToolBarMenuButton, 1)
 // 构造/析构
 //////////////////////////////////////////////////////////////////////
 
-CClassView::CClassView()
+CSidePane::CSidePane()
 {
 	m_nCurrSort = ID_SORTING_GROUPBYTYPE;
+    m_pQuoteDB = NULL;
 }
 
-CClassView::~CClassView()
+CSidePane::~CSidePane()
 {
+    if (m_pQuoteDB)
+    {
+        m_pQuoteDB->DisConnect();
+        delete m_pQuoteDB;
+        m_pQuoteDB = NULL;
+    }
 }
 
-BEGIN_MESSAGE_MAP(CClassView, CDockablePane)
+BEGIN_MESSAGE_MAP(CSidePane, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
@@ -63,10 +71,16 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CClassView 消息处理程序
 
-int CClassView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int CSidePane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
+
+    if (m_pQuoteDB == NULL)
+    {
+        m_pQuoteDB = new CQuoteDB();
+        m_pQuoteDB->Initial(CGSetting::GetInstance()->GetString(cst_SQL_SERVER), CGSetting::GetInstance()->GetString(cst_SQL_DB));
+    }
 
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
@@ -115,24 +129,30 @@ int CClassView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CClassView::OnSize(UINT nType, int cx, int cy)
+void CSidePane::OnSize(UINT nType, int cx, int cy)
 {
 	CDockablePane::OnSize(nType, cx, cy);
 	AdjustLayout();
 }
 
-void CClassView::FillClassView()
+void CSidePane::FillClassView()
 {
-	CDocument* pCurrentDoc = theApp.GetMainWnd()->;
-	HTREEITEM hRoot = m_wndClassView.InsertItem(_T("Stocks"), 0, 0);
+	HTREEITEM hRoot = m_wndClassView.InsertItem(_T("股票证券"), 0, 0);
 	m_wndClassView.SetItemState(hRoot, TVIS_BOLD, TVIS_BOLD);
 
-	HTREEITEM hClass = m_wndClassView.InsertItem(_T("Quotes"), 1, 1, hRoot);
-	m_wndClassView.InsertItem(_T("Quote"), 3, 3, hClass);
+    map<int, CString> mapSecurity;
+    m_pQuoteDB->GetSecurityList(mapSecurity);
+
+	HTREEITEM hClass = m_wndClassView.InsertItem(_T("股票"), 1, 1, hRoot);
+    for (map<int, CString>::iterator itSec=mapSecurity.begin(); itSec!=mapSecurity.end(); itSec++)
+    {
+        m_wndClassView.InsertItem(itSec->second, 3, 3, hClass);
+    }
 
 	m_wndClassView.Expand(hRoot, TVE_EXPAND);
+    m_wndClassView.Expand(hClass, TVE_COLLAPSE);
 
-	hClass = m_wndClassView.InsertItem(_T("CFakeApp"), 1, 1, hRoot);
+	/*hClass = m_wndClassView.InsertItem(_T("CFakeApp"), 1, 1, hRoot);
 	m_wndClassView.InsertItem(_T("CFakeApp()"), 3, 3, hClass);
 	m_wndClassView.InsertItem(_T("InitInstance()"), 3, 3, hClass);
 	m_wndClassView.InsertItem(_T("OnAppAbout()"), 3, 3, hClass);
@@ -157,10 +177,10 @@ void CClassView::FillClassView()
 
 	hClass = m_wndClassView.InsertItem(_T("Globals"), 2, 2, hRoot);
 	m_wndClassView.InsertItem(_T("theFakeApp"), 5, 5, hClass);
-	m_wndClassView.Expand(hClass, TVE_EXPAND);
+	m_wndClassView.Expand(hClass, TVE_EXPAND);*/
 }
 
-void CClassView::OnContextMenu(CWnd* pWnd, CPoint point)
+void CSidePane::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	CTreeCtrl* pWndTree = (CTreeCtrl*)&m_wndClassView;
 	ASSERT_VALID(pWndTree);
@@ -203,7 +223,7 @@ void CClassView::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 }
 
-void CClassView::AdjustLayout()
+void CSidePane::AdjustLayout()
 {
 	if (GetSafeHwnd() == NULL)
 	{
@@ -219,12 +239,12 @@ void CClassView::AdjustLayout()
 	m_wndClassView.SetWindowPos(NULL, rectClient.left + 1, rectClient.top + cyTlb + 1, rectClient.Width() - 2, rectClient.Height() - cyTlb - 2, SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
-BOOL CClassView::PreTranslateMessage(MSG* pMsg)
+BOOL CSidePane::PreTranslateMessage(MSG* pMsg)
 {
 	return CDockablePane::PreTranslateMessage(pMsg);
 }
 
-void CClassView::OnSort(UINT id)
+void CSidePane::OnSort(UINT id)
 {
 	if (m_nCurrSort == id)
 	{
@@ -243,37 +263,37 @@ void CClassView::OnSort(UINT id)
 	}
 }
 
-void CClassView::OnUpdateSort(CCmdUI* pCmdUI)
+void CSidePane::OnUpdateSort(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(pCmdUI->m_nID == m_nCurrSort);
 }
 
-void CClassView::OnClassAddMemberFunction()
+void CSidePane::OnClassAddMemberFunction()
 {
 	AfxMessageBox(_T("添加成员函数..."));
 }
 
-void CClassView::OnClassAddMemberVariable()
+void CSidePane::OnClassAddMemberVariable()
 {
 	// TODO: 在此处添加命令处理程序代码
 }
 
-void CClassView::OnClassDefinition()
+void CSidePane::OnClassDefinition()
 {
 	// TODO: 在此处添加命令处理程序代码
 }
 
-void CClassView::OnClassProperties()
+void CSidePane::OnClassProperties()
 {
 	// TODO: 在此处添加命令处理程序代码
 }
 
-void CClassView::OnNewFolder()
+void CSidePane::OnNewFolder()
 {
 	AfxMessageBox(_T("新建文件夹..."));
 }
 
-void CClassView::OnPaint()
+void CSidePane::OnPaint()
 {
 	CPaintDC dc(this); // 用于绘制的设备上下文
 
@@ -285,14 +305,14 @@ void CClassView::OnPaint()
 	dc.Draw3dRect(rectTree, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));
 }
 
-void CClassView::OnSetFocus(CWnd* pOldWnd)
+void CSidePane::OnSetFocus(CWnd* pOldWnd)
 {
 	CDockablePane::OnSetFocus(pOldWnd);
 
 	m_wndClassView.SetFocus();
 }
 
-void CClassView::OnChangeVisualStyle()
+void CSidePane::OnChangeVisualStyle()
 {
 	m_ClassViewImages.DeleteImageList();
 

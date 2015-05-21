@@ -15,8 +15,6 @@
 #include "QuoteWapper.h"
 #include "Util_String.h"
 
-#include "ClassView.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -39,6 +37,7 @@ BEGIN_MESSAGE_MAP(CBuddyDeskView, CView)
 	ON_COMMAND(WM_PARSE_QUOTE_FINISHED, &OnParseQuoteFinished)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+    ON_COMMAND(ID_MENU_UPDATESECURITYINFO, &CBuddyDeskView::OnUpdateSecurityinfo)
 END_MESSAGE_MAP()
 
 // CBuddyDeskView 构造/析构
@@ -66,9 +65,6 @@ int CBuddyDeskView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	// TODO:  在此添加您专用的创建代码
-    CCreateContext context;
-    context.m_pNewViewClass = RUNTIME_CLASS(CClassView);
-    context.m_pCurrentDoc = GetDocument();
 
 	return 0;
 }
@@ -287,3 +283,9 @@ CBuddyDeskDoc* CBuddyDeskView::GetDocument() const // 非调试版本是内联的
 
 
 // CBuddyDeskView 消息处理程序
+
+
+void CBuddyDeskView::OnUpdateSecurityinfo()
+{
+    // TODO: 在此添加命令处理程序代码
+}

@@ -60,9 +60,6 @@
     <ClInclude Include="FileView.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ClassView.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ViewTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -135,6 +132,9 @@
     <ClInclude Include="UserDefinedMessage.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SidePane.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuddyDesk.cpp">
@@ -156,9 +156,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FileView.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ClassView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ViewTree.cpp">
@@ -219,6 +216,9 @@
       <Filter>线程池</Filter>
     </ClCompile>
     <ClCompile Include="Worker.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SidePane.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

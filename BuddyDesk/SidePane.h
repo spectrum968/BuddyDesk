@@ -2,6 +2,7 @@
 #pragma once
 
 #include "ViewTree.h"
+#include "QuoteDB.h"
 
 class CClassToolBar : public CMFCToolBar
 {
@@ -13,11 +14,11 @@ class CClassToolBar : public CMFCToolBar
 	virtual BOOL AllowShowOnList() const { return FALSE; }
 };
 
-class CClassView : public CDockablePane
+class CSidePane : public CDockablePane
 {
 public:
-	CClassView();
-	virtual ~CClassView();
+	CSidePane();
+	virtual ~CSidePane();
 
 	void AdjustLayout();
 	void OnChangeVisualStyle();
@@ -27,6 +28,8 @@ protected:
 	CViewTree m_wndClassView;
 	CImageList m_ClassViewImages;
 	UINT m_nCurrSort;
+
+    CQuoteDB* m_pQuoteDB;
 
 	void FillClassView();
 

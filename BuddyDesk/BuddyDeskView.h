@@ -57,6 +57,8 @@ private:
 	bool m_bCandleStick;
 	bool m_bThickLine;
 
+public:
+    afx_msg void OnUpdateSecurityinfo();
 };
 
 #ifndef _DEBUG  // BuddyDeskView.cpp 中的调试版本

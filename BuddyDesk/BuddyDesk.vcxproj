@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>C:\Projects\BuddyDesk\Debug\Lib\;$(WindowsSDK_LibraryPath_x86);$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib</LibraryPath>
-    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);c:\Projects\Xtreme ToolkitPro v15.0.1\Source\</IncludePath>
+    <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);c:\Projects\Xtreme ToolkitPro v15.0.1\Source</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -108,7 +108,7 @@
     <ClInclude Include="BuddyDeskDoc.h" />
     <ClInclude Include="BuddyDeskView.h" />
     <ClInclude Include="ChildFrm.h" />
-    <ClInclude Include="ClassView.h" />
+    <ClInclude Include="SidePane.h" />
     <ClInclude Include="CommonTool.h" />
     <ClInclude Include="ConstDef.h" />
     <ClInclude Include="DBOperator.h" />
@@ -144,7 +144,7 @@
     <ClCompile Include="BuddyDeskDoc.cpp" />
     <ClCompile Include="BuddyDeskView.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
-    <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="SidePane.cpp" />
     <ClCompile Include="CommonTool.cpp" />
     <ClCompile Include="DBOperator.cpp" />
     <ClCompile Include="FileView.cpp" />
@@ -211,4 +211,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="BuddyDesk.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
