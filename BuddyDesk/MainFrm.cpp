@@ -206,13 +206,13 @@ BOOL CMainFrame::CreateDockingWindows()
 {
 	BOOL bNameValid;
 
-	// 创建类视图
+	// 创建证券列表
 	CString strClassView;
-	bNameValid = strClassView.LoadString(IDS_CLASS_VIEW);
+	bNameValid = strClassView.LoadString(IDS_SECURITY_LIST);
 	ASSERT(bNameValid);
 	if (!m_wndClassView.Create(strClassView, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_CLASSVIEW, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
 	{
-		TRACE0("未能创建“类视图”窗口\n");
+		TRACE0("未能创建“证券列表”窗口\n");
 		return FALSE; // 未能创建
 	}
 

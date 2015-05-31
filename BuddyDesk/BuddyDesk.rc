@@ -52,11 +52,11 @@ BEGIN
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
     "LANGUAGE 4, 2\r\n"
-    "#include ""res\\BuddyDesk.rc2""  // ?¤? Microsoft Visual C++ ?à¨¤?-|ì??á¨o???\r\n"
-    "#include ""l.CHS\\afxres.rc""      // ?à¨o?á??á¨|?t\r\n"
-    "#include ""l.CHS\\afxprint.rc""    // ??¨°¨??/??¨°¨????è¨¤¨¤?á¨o???\r\n"
+    "#include ""res\\BuddyDesk.rc2""  // ??è? Microsoft Visual C++ ?¨¤?§?è?-|¨???¨￠?§o???\r\n"
+    "#include ""l.CHS\\afxres.rc""      // ?¨¤?§o?¨￠??¨￠?§|?t\r\n"
+    "#include ""l.CHS\\afxprint.rc""    // ???§???§??/???§???§????¨¨?§?è?§?è?¨￠?§o???\r\n"
     "#if !defined(_AFXDLL)\r\n"
-    "#include ""l.CHS\\afxribbon.rc""        // MFC 1|?¨1??o¨a???t¨???á¨o???\r\n"
+    "#include ""l.CHS\\afxribbon.rc""        // MFC 1|??§1??o?§a???t?§???¨￠?§o???\r\n"
     "#endif\r\n"
     "#endif\r\n"
     "\0"
@@ -588,7 +588,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_FILE_VIEW           "文件视图"
-    IDS_CLASS_VIEW          "K线树"
+    IDS_CLASS_VIEW          "类视图"
     IDS_OUTPUT_WND          "输出"
     IDS_PROPERTIES_WND      "属性"
 END
@@ -597,6 +597,7 @@ STRINGTABLE
 BEGIN
     IDS_EXPLORER            "资源管理器"
     IDS_EDIT_MENU           "编辑"
+    IDS_SECURITY_LIST       "证券列表"
 END
 
 STRINGTABLE
@@ -622,11 +623,11 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE 4, 2
-#include "res\BuddyDesk.rc2"  // ·? Microsoft Visual C++ ±à?-μ?×ê?′
-#include "l.CHS\afxres.rc"      // ±ê×?×é?t
-#include "l.CHS\afxprint.rc"    // ′òó?/′òó??¤àà×ê?′
+#include "res\BuddyDesk.rc2"  // ?¤? Microsoft Visual C++ ?à¨¤?-|ì??á¨o???
+#include "l.CHS\afxres.rc"      // ?à¨o?á??á¨|?t
+#include "l.CHS\afxprint.rc"    // ??¨°¨??/??¨°¨????è¨¤¨¤?á¨o???
 #if !defined(_AFXDLL)
-#include "l.CHS\afxribbon.rc"        // MFC 1|?ü??oí???tì?×ê?′
+#include "l.CHS\afxribbon.rc"        // MFC 1|?¨1??o¨a???t¨???á¨o???
 #endif
 #endif
 

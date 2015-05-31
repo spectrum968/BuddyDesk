@@ -84,6 +84,7 @@
 #define IDS_FIND_TAB                    302
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
+#define IDS_SECURITY_LIST               307
 #define ID__32771                       32771
 #define ID_32772                        32772
 #define ID_MENU_UPDATESECURITYINFO      32773
